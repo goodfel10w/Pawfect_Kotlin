@@ -121,7 +121,7 @@ private fun ProfileCard(
                     fontWeight = FontWeight.Medium,
                     modifier = Modifier.padding(bottom = 4.dp)
                 )
-                Row() {
+                Row{
                     Text(
                         text = uiState.animalProfiles[0].species + ",",
                         fontSize = 12.sp,
@@ -164,7 +164,7 @@ fun BottomAppBarExample() {
                         }
                         Text(stringResource(R.string.chats), modifier = Modifier.align(Alignment.CenterHorizontally))
                     }
-                    Column() {
+                    Column{
                         IconButton1(onClick = { /* do something */ }) {
                             Icon(
                                 painter = painterResource(id = R.drawable.favorite_24dp_fill0_wght400_grad0_opsz24),
