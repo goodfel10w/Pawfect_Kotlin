@@ -1,24 +1,28 @@
-import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.ShoppingCart
+import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -30,18 +34,20 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.google.android.gms.drive.query.Filter
 import com.example.pawfect_kotlin.R
+import androidx.compose.material3.IconButton as IconButton1
+import com.example.pawfect_kotlin.SwipeViewModel
+import com.example.pawfect_kotlin.data.SwipeUiState
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MyScreen() {
+fun MyScreen(viewModel: SwipeViewModel) {
     Scaffold(
         topBar = {
             TopAppBar(
                 title = { Text("") },
                 actions = {
-                    IconButton(onClick = { /*TODO*/ }) {
+                    IconButton1(onClick = { /*TODO*/ }) {
                         Icon(
                             painter = painterResource(id = R.drawable.filter_alt_24px),
                             contentDescription = "",
@@ -51,6 +57,7 @@ fun MyScreen() {
             )
         }
     ) { innerPadding ->
+        val uiState by viewModel.uiState.collectAsState()
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -65,14 +72,16 @@ fun MyScreen() {
                     .height(100.dp)
                     .padding(8.dp)
             )
-            Spacer(modifier = Modifier.height(80.dp))
-            ProfileCard(modifier = Modifier)
+            Spacer(modifier = Modifier.height(20.dp))
+            ProfileCard(uiState ,modifier = Modifier)
+            BottomAppBarExample()
         }
     }
 }
 
 @Composable
 private fun ProfileCard(
+    uiState: SwipeUiState,
     modifier: Modifier = Modifier
 ) {
     Card(
@@ -107,23 +116,82 @@ private fun ProfileCard(
                     .padding(8.dp)
             ) {
                 Text(
-                    text = "Hund",
+                    text = uiState.animalProfiles[0].name,
                     fontSize = 22.sp,
                     fontWeight = FontWeight.Medium,
                     modifier = Modifier.padding(bottom = 4.dp)
                 )
-                Text(
-                    text = "Hässlicher Hund",
-                    fontSize = 12.sp,
-                    fontWeight = FontWeight.Medium,
-                    modifier = Modifier.padding(bottom = 4.dp)
-                )
+                Row() {
+                    Text(
+                        text = uiState.animalProfiles[0].species + ",",
+                        fontSize = 12.sp,
+                        fontWeight = FontWeight.Medium,
+                        modifier = Modifier
+                            .padding(bottom = 4.dp)
+                            .padding(end = 4.dp)
+                    )
+                    Text(
+                        text = uiState.animalProfiles[0].breed,
+                        fontSize = 12.sp,
+                        fontWeight = FontWeight.Medium,
+                        modifier = Modifier
+                            .padding(bottom = 4.dp)
+                    )
+                }
             }
         }
     }
 }
+
+@Composable
+fun BottomAppBarExample() {
+    Scaffold(
+        bottomBar = {
+            BottomAppBar(
+                contentPadding = PaddingValues(horizontal = 16.dp),
+                modifier = Modifier.background(Color.White)
+            ) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Column {
+                        IconButton1(onClick = { /* do something */ }) {
+                            Icon(
+                                painter = painterResource(id = R.drawable.sms_24dp_fill0_wght400_grad0_opsz24),
+                                contentDescription = null // decorative element
+                            )
+                        }
+                        Text(stringResource(R.string.chats), modifier = Modifier.align(Alignment.CenterHorizontally))
+                    }
+                    Column() {
+                        IconButton1(onClick = { /* do something */ }) {
+                            Icon(
+                                painter = painterResource(id = R.drawable.favorite_24dp_fill0_wght400_grad0_opsz24),
+                                contentDescription = null // decorative element
+                            )
+                        }
+                        Text(stringResource(R.string.swipen), modifier = Modifier.align(Alignment.CenterHorizontally))
+                    }
+                    Column {
+                        IconButton1(onClick = { /* do something */ }) {
+                            Icon(
+                                painter = painterResource(id = R.drawable.person_24dp_fill0_wght400_grad0_opsz24),
+                                contentDescription = null // decorative element
+                            )
+                        }
+                        Text(stringResource(R.string.profil), modifier = Modifier.align(Alignment.CenterHorizontally))
+                    }
+                }
+            }
+        },
+    ) { innerPadding ->
+        // Content
+    }
+}
+
 @Preview(showBackground = true)
 @Composable
 fun MyScreenPreview() {
-    MyScreen()
+    MyScreen(viewModel = SwipeViewModel())
 }
