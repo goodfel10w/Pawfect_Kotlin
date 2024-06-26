@@ -2,6 +2,7 @@ package com.example.pawfect_kotlin.database.dao
 
 import androidx.room.*
 import com.example.pawfect_kotlin.database.entity.Dislike
+import com.example.pawfect_kotlin.database.entity.Like
 
 @Dao
 interface DislikeDao {
@@ -19,4 +20,7 @@ interface DislikeDao {
 
     @Query("SELECT * FROM dislikes")
     suspend fun getAllDislikes(): List<Dislike>
+
+    @Query("SELECT * FROM dislikes WHERE dislikerAnimalId = :animalProfileId")
+    suspend fun getAllDislikedProfiles(animalProfileId: Int): List<Dislike>
 }

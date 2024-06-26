@@ -24,12 +24,6 @@ fun getAllProfiles(): List<AnimalProfile> {
     return allProfiles
 }
 
-//Funktion zur Initialisierung eines leeren Filters
-fun initiateCurrentFilter(): Filter {
-
-    return Filter()
-}
-
 //Funktion zur Anwendung des Filters und Manipulation der Profilliste
 fun applyFilter(allProfiles: List<AnimalProfile>, currentFilter: Filter) {
     listOfAnimalProfiles.clear()

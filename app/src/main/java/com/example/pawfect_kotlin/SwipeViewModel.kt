@@ -2,6 +2,7 @@ package com.example.pawfect_kotlin
 
 import androidx.lifecycle.ViewModel
 import com.example.pawfect_kotlin.data.SwipeUiState
+import com.example.pawfect_kotlin.database.dao.AnimalProfileDao
 import com.example.pawfect_kotlin.database.entity.AnimalProfile
 import com.example.pawfect_kotlin.database.entity.Gender
 import com.example.pawfect_kotlin.database.entity.Intent
@@ -9,13 +10,13 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
+
 class SwipeViewModel: ViewModel() {
 
-    /**
-     * Cupcake state for this order
-     */
     private val _uiState = MutableStateFlow(SwipeUiState(animalProfiles = getAnimalMockProfiles()))
     val uiState: StateFlow<SwipeUiState> = _uiState.asStateFlow()
+
+
 
     private fun getAnimalMockProfiles(): List<AnimalProfile> {
         val animal1 = AnimalProfile(
@@ -67,5 +68,5 @@ class SwipeViewModel: ViewModel() {
         )
 
         return listOf(animal1, animal2, animal3)
+        }
     }
-}
