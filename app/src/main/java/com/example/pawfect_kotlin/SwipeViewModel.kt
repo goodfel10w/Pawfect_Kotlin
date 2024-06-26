@@ -2,7 +2,6 @@ package com.example.pawfect_kotlin
 
 import androidx.lifecycle.ViewModel
 import com.example.pawfect_kotlin.data.SwipeUiState
-import com.example.pawfect_kotlin.database.PawfectDatabaseTest
 import com.example.pawfect_kotlin.database.entity.AnimalProfile
 import com.example.pawfect_kotlin.database.entity.Gender
 import com.example.pawfect_kotlin.database.entity.Intent
