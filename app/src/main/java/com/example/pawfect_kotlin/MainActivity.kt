@@ -20,7 +20,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             Pawfect_KotlinTheme {
-                MyScreen()
+                MyScreen(viewModel = SwipeViewModel())
             }
         }
     }
@@ -38,6 +38,6 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
 @Composable
 fun GreetingPreview() {
     Pawfect_KotlinTheme {
-        MyScreen()
+        MyScreen(viewModel = SwipeViewModel())
     }
 }
