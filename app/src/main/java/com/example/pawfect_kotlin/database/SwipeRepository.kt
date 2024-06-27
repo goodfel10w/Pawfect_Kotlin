@@ -1,3 +1,4 @@
+/*
 package com.example.pawfect_kotlin.database
 
 import com.example.pawfect_kotlin.database.dao.AnimalProfileDao
@@ -25,7 +26,8 @@ class SwipeRepository (
 
         val listWithUnprocessedProfiles: List<AnimalProfile> = getAllUnprocessedProfiles()
 
-        /*for (profile in allProfiles) {
+        */
+/*for (profile in allProfiles) {
         if ((profile.animalProfileId != myProfile.animalProfileId) &&
             (!listOfLikes.any { like -> like.likerAnimalId == myProfile.animalProfileId && like.likeeAnimalId == profile.animalProfileId }) &&
             (!listOfDislikes.any { dislike -> dislike.dislikerAnimalId == myProfile.animalProfileId && dislike.dislikeeAnimalId == profile.animalProfileId })
@@ -40,7 +42,8 @@ class SwipeRepository (
         }
     }
     listOfAnimalProfiles.shuffle()
-}*/
+}*//*
+
 
     }
 
@@ -63,4 +66,5 @@ class SwipeRepository (
         return likeDao.getAllLikes()
     }
 }
+*/
 

@@ -1,6 +1,11 @@
+import androidx.compose.animation.core.Animatable
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.gestures.detectDragGestures
+import androidx.compose.foundation.gestures.draggable
+import androidx.compose.foundation.gestures.rememberDraggableState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -10,6 +15,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.BottomAppBar
@@ -22,18 +28,25 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -44,6 +57,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.pawfect_kotlin.PawfectDestinations
 import com.example.pawfect_kotlin.R
 import com.example.pawfect_kotlin.SwipeViewModel
+import kotlin.math.absoluteValue
 import androidx.compose.material3.IconButton as IconButton1
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -93,7 +107,9 @@ fun SwipeScreen(
                     .padding(8.dp)
             )
             Spacer(modifier = Modifier.height(20.dp))
-            ProfileCard()
+            ProfileCardWithSwipe(onSwipe = { /*TODO*/ }) {
+                
+            }
             ProfileInformation()
             BottomAppBarExample()
         }
@@ -140,7 +156,7 @@ private fun ProfileCard(
                     .padding(8.dp)
             ) {
                 Text(
-                    text = uiState.animalProfiles[0].name,
+                    text = uiState.animalProfiles[0].name + ", " + uiState.animalProfiles[uiState.indexOfList].age,
                     fontSize = 22.sp,
                     fontWeight = FontWeight.Medium,
                     modifier = Modifier.padding(bottom = 4.dp)
@@ -175,24 +191,22 @@ private fun ProfileInformation(viewModel: SwipeViewModel = viewModel()) {
                 modifier = Modifier
                     .padding(16.dp)
                     .padding(start = 32.dp, end = 32.dp)) {
-            Row {
+            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically ) {
                 Icon(
                     painter = painterResource(id = R.drawable.square_foot_24dp_fill0_wght400_grad0_opsz24),
-                    contentDescription = stringResource(R.string.alter_und_groese),
+                    contentDescription = "Größe",
 
                 )
                 Text(
-                    text = stringResource(R.string.alter) + uiState.animalProfiles[uiState.indexOfList].age.toString()
-                    + ", " + uiState.animalProfiles[uiState.indexOfList].size + " cm",
+                    text = uiState.animalProfiles[uiState.indexOfList].size.toString() + " cm",
                     fontSize = 12.sp,
                     fontWeight = FontWeight.Medium,
-                    textAlign = TextAlign.End,
                     modifier = Modifier
                         .padding(bottom = 4.dp)
                         .padding(end = 4.dp))
             }
             HorizontalDivider(thickness = 1.dp, color = Color.Black, modifier = Modifier.padding(top = 2.dp, bottom = 2.dp))
-            Row {
+            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically ) {
                 Icon(
                     painter = painterResource(id = R.drawable.user_attributes_24dp_fill0_wght400_grad0_opsz24),
                     contentDescription = "Eigenschaften"
@@ -205,7 +219,7 @@ private fun ProfileInformation(viewModel: SwipeViewModel = viewModel()) {
                 )
             }
             HorizontalDivider( thickness = 1.dp, color = Color.Black, modifier = Modifier.padding(top = 2.dp, bottom = 2.dp))
-            Row(horizontalArrangement = Arrangement.Start) {
+            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically ) {
                 Icon(
                     painter = painterResource(id = R.drawable.person_24dp_fill0_wght400_grad0_opsz24),
                     contentDescription = stringResource(R.string.name_des_tierhalters),
@@ -264,6 +278,64 @@ fun BottomAppBarExample() {
     ) { innerPadding ->
         // Content
     }
+}
+
+@Composable
+fun ProfileCardWithSwipe(
+    modifier: Modifier = Modifier,
+    draggable: Boolean = true,
+    onSwipe: () -> Unit,
+    content: @Composable () -> Unit
+) {
+    var offsetX by remember { mutableStateOf(0f) }
+    var offsetY by remember { mutableStateOf(0f) }
+    val sizePx = with(LocalDensity.current) { 300.dp.toPx() }
+
+    val offsetXState = remember { Animatable(0f) }
+    val offsetYState = remember { Animatable(0f) }
+
+    LaunchedEffect(Unit) {
+        offsetXState.animateTo(0f)
+        offsetYState.animateTo(0f)
+    }
+
+    val gestureDetector = Modifier.pointerInput(Unit) {
+        detectDragGestures(
+            onDragEnd = {
+                // Reset position when drag ends
+                offsetX = 0f
+                offsetY = 0f
+            }
+        ) { change, dragAmount ->
+            change.consume()
+            offsetX += dragAmount.x
+            offsetY += dragAmount.y
+        }
+    }
+
+    ProfileCard(modifier = Modifier
+        .offset { IntOffset(offsetX.toInt(), offsetY.toInt()) }
+        .draggable(
+            orientation = Orientation.Horizontal,
+            state = rememberDraggableState { delta ->
+                offsetX += delta
+            }
+        )
+        .draggable(
+            orientation = Orientation.Vertical,
+            state = rememberDraggableState { delta ->
+                offsetY += delta
+            }
+        )
+        .graphicsLayer {
+            val rotationAngle = offsetX / sizePx * 30
+            rotationZ = rotationAngle
+            var alpha = (offsetX / sizePx).coerceIn(-1f, 1f).absoluteValue
+            alpha = 1 - alpha
+            this.alpha = alpha
+        }
+        .then(gestureDetector)
+    )
 }
 
 @Preview(showBackground = true)
