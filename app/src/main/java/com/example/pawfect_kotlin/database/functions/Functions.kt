@@ -88,14 +88,14 @@ fun onFilterOptionsButtonClick() {
     showFilterOptionsView()
 }
 
-//Filter anwenden-Button
+//Filter Anwenden-Button
 fun onApplyFilterButtonClick(filterView: FilterView) {
     currentFilter = filterView
     applyFilter(getAllProfiles(), currentFilter)
     showNextProfile()
 }
 
-//Filter löschen-Button
+//Filter Löschen-Button
 fun onClearFilterButtonClick() {
     currentFilter = getStandardFilter()
     applyFilter(getAllProfiles(), currentFilter)
