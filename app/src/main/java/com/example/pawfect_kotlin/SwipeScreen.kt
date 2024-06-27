@@ -34,6 +34,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -175,7 +176,7 @@ private fun ProfileInformation(viewModel: SwipeViewModel = viewModel()) {
                 modifier = Modifier
                     .padding(16.dp)
                     .padding(start = 32.dp, end = 32.dp)) {
-            Row {
+            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically ) {
                 Icon(
                     painter = painterResource(id = R.drawable.square_foot_24dp_fill0_wght400_grad0_opsz24),
                     contentDescription = stringResource(R.string.alter_und_groese),
@@ -186,13 +187,12 @@ private fun ProfileInformation(viewModel: SwipeViewModel = viewModel()) {
                     + ", " + uiState.animalProfiles[uiState.indexOfList].size + " cm",
                     fontSize = 12.sp,
                     fontWeight = FontWeight.Medium,
-                    textAlign = TextAlign.End,
                     modifier = Modifier
                         .padding(bottom = 4.dp)
                         .padding(end = 4.dp))
             }
             HorizontalDivider(thickness = 1.dp, color = Color.Black, modifier = Modifier.padding(top = 2.dp, bottom = 2.dp))
-            Row {
+            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically ) {
                 Icon(
                     painter = painterResource(id = R.drawable.user_attributes_24dp_fill0_wght400_grad0_opsz24),
                     contentDescription = "Eigenschaften"
@@ -205,7 +205,7 @@ private fun ProfileInformation(viewModel: SwipeViewModel = viewModel()) {
                 )
             }
             HorizontalDivider( thickness = 1.dp, color = Color.Black, modifier = Modifier.padding(top = 2.dp, bottom = 2.dp))
-            Row(horizontalArrangement = Arrangement.Start) {
+            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically ) {
                 Icon(
                     painter = painterResource(id = R.drawable.person_24dp_fill0_wght400_grad0_opsz24),
                     contentDescription = stringResource(R.string.name_des_tierhalters),
