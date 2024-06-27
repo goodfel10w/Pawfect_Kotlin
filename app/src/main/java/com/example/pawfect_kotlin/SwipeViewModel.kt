@@ -20,13 +20,13 @@ class SwipeViewModel() : ViewModel() {
     val uiState: StateFlow<SwipeUiState> = _uiState.asStateFlow()
 
     fun addLike() {
-        uiState.value.indexOfList.inc()
-        Log.v(TAG, "Like Added for " + _uiState.value.animalProfiles[_uiState.value.indexOfList].animalProfileId)
+        _uiState.value = _uiState.value.copy(indexOfList = _uiState.value.indexOfList.inc())
+        Log.v(TAG, "Like Added for " + _uiState.value.animalProfiles[_uiState.value.indexOfList].animalProfileId + "index = " + _uiState.value.indexOfList)
     }
 
     fun addDislike() {
-        uiState.value.indexOfList.inc()
-        Log.v(TAG, "Disliked Added for " + _uiState.value.animalProfiles[_uiState.value.indexOfList].animalProfileId)
+        _uiState.value = _uiState.value.copy(indexOfList = _uiState.value.indexOfList.inc())
+        Log.v(TAG, "Disliked Added for " + _uiState.value.animalProfiles[_uiState.value.indexOfList].animalProfileId + "index = " + _uiState.value.indexOfList)
     }
 
     private fun getAnimalMockProfiles(): List<AnimalProfile> {

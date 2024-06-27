@@ -1,3 +1,4 @@
+import android.util.Log
 import androidx.compose.animation.core.Animatable
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -51,26 +52,36 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
+import androidx.navigation.NavOptions
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.pawfect_kotlin.FilterScreen
 import com.example.pawfect_kotlin.PawfectDestinations
 import com.example.pawfect_kotlin.R
 import com.example.pawfect_kotlin.SwipeViewModel
 import kotlin.math.absoluteValue
 import androidx.compose.material3.IconButton as IconButton1
 
+const val TAG = "RoutingActivity"
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SwipeScreen(
     viewModel: SwipeViewModel = viewModel(),
     navController: NavHostController = rememberNavController()) {
+
     Scaffold(
         topBar = {
             TopAppBar(
                 title = { Text("") },
                 actions = {
-                    IconButton1(onClick = { /*TODO*/ }) {
+                    IconButton1(onClick = {
+                        Log.v(TAG,"Route to Filter triggered")
+                        navController.navigate(PawfectDestinations.Filter.name) {
+                            launchSingleTop = true
+                        }
+                    }) {
                         Icon(
                             painter = painterResource(id = R.drawable.filter_alt_24px),
                             contentDescription = "",
@@ -82,15 +93,6 @@ fun SwipeScreen(
     ) { innerPadding ->
 
         val uiState by viewModel.uiState.collectAsState()
-
-        NavHost(
-            navController = navController,
-            startDestination = PawfectDestinations.Start.name,
-            modifier = Modifier.padding(innerPadding)
-        ) {
-            composable(route = PawfectDestinations.Start.name ) {
-            }
-        }
 
         Column(
             modifier = Modifier
@@ -241,62 +243,59 @@ private fun ProfileInformation(viewModel: SwipeViewModel = viewModel()) {
 
 @Composable
 fun BottomAppBarExample() {
-    Scaffold(
-        bottomBar = {
-            BottomAppBar(
-                contentPadding = PaddingValues(horizontal = 32.dp),
-                modifier = Modifier.background(Color.White)
-            ) {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceAround
-                ) {
-                    Column {
-                        IconButton1(onClick = { /*  */ }) {
-                            Icon(
-                                painter = painterResource(id = R.drawable.sms_24dp_fill0_wght400_grad0_opsz24),
-                                contentDescription = null // decorative element
-                            )
-                        }
-                        Text(stringResource(
-                            R.string.chats),
-                            modifier = Modifier.align(Alignment.CenterHorizontally),
-                            fontSize = 12.sp,
-                            fontWeight = FontWeight.Medium)
-                    }
-                    Column{
-                        IconButton1(onClick = { /* do something */ }) {
-                            Icon(
-                                painter = painterResource(id = R.drawable.favorite_24dp_fill0_wght400_grad0_opsz24),
-                                contentDescription = null // decorative element
-                            )
-                        }
-                        Text(
-                            stringResource(R.string.swipen),
-                            modifier = Modifier.align(Alignment.CenterHorizontally),
-                            fontSize = 12.sp,
-                            fontWeight = FontWeight.Medium
-                        )
-                    }
-                    Column {
-                        IconButton1(onClick = { /* do something */ }) {
-                            Icon(
-                                painter = painterResource(id = R.drawable.person_24dp_fill0_wght400_grad0_opsz24),
-                                contentDescription = null // decorative element
-                            )
-                        }
-                        Text(
-                            stringResource(R.string.profil),
-                            modifier = Modifier.align(Alignment.CenterHorizontally),
-                            fontSize = 12.sp,
-                            fontWeight = FontWeight.Medium
-                        )
-                    }
+    BottomAppBar(
+        contentPadding = PaddingValues(horizontal = 32.dp),
+        modifier = Modifier.background(Color.White)
+    ) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceAround
+        ) {
+            Column {
+                IconButton1(onClick = { /*  */ }) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.sms_24dp_fill0_wght400_grad0_opsz24),
+                        contentDescription = null // decorative element
+                    )
                 }
+                Text(
+                    stringResource(
+                        R.string.chats
+                    ),
+                    modifier = Modifier.align(Alignment.CenterHorizontally),
+                    fontSize = 12.sp,
+                    fontWeight = FontWeight.Medium
+                )
             }
-        },
-    ) { innerPadding ->
-        // Content
+            Column {
+                IconButton1(onClick = { /* do something */ }) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.favorite_24dp_fill0_wght400_grad0_opsz24),
+                        contentDescription = null // decorative element
+                    )
+                }
+                Text(
+                    stringResource(R.string.swipen),
+                    modifier = Modifier.align(Alignment.CenterHorizontally),
+                    fontSize = 12.sp,
+                    fontWeight = FontWeight.Medium
+                )
+            }
+            Column {
+                IconButton1(onClick = { /* do something */ }) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.person_24dp_fill0_wght400_grad0_opsz24),
+                        contentDescription = null // decorative element
+                    )
+                }
+                Text(
+                    stringResource(R.string.profil),
+                    modifier = Modifier.align(Alignment.CenterHorizontally),
+                    fontSize = 12.sp,
+                    fontWeight = FontWeight.Medium
+                )
+            }
+        }
     }
 }
 
@@ -365,6 +364,7 @@ fun ProfileCardWithSwipe(
         .then(gestureDetector)
     )
 }
+
 
 @Preview(showBackground = true)
 @Composable
