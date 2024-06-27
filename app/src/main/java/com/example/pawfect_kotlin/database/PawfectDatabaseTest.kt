@@ -63,16 +63,16 @@ class PawfectDatabaseTest {
         userProfiles.forEach { userProfileDao.insert(it) }
 
         val animalProfiles = listOf(
-            AnimalProfile(1, 1, "Buddy", 3, Gender.MALE, "image1.jpg", "Dog", "Labrador", "Friendly", 60.0, 30.0, Intent.PLAY, "Playful and energetic"),
-            AnimalProfile(2, 2, "Mittens", 2, Gender.FEMALE, "image2.jpg", "Cat", "Siamese", "Calm", 25.0, 5.0, Intent.MATE, "Quiet and affectionate"),
-            AnimalProfile(3, 3, "Max", 5, Gender.MALE, "image3.jpg", "Dog", "Beagle", "Curious", 40.0, 20.0, Intent.PLAY, "Loves to explore"),
-            AnimalProfile(4, 4, "Bella", 4, Gender.FEMALE, "image4.jpg", "Cat", "Persian", "Lazy", 30.0, 6.0, Intent.MATE, "Loves to sleep"),
-            AnimalProfile(5, 5, "Rocky", 1, Gender.MALE, "image5.jpg", "Dog", "Bulldog", "Strong", 50.0, 25.0, Intent.PLAY, "Very strong and loyal"),
-            AnimalProfile(6, 1, "Luna", 3, Gender.FEMALE, "image6.jpg", "Cat", "Bengal", "Playful", 28.0, 7.0, Intent.MATE, "Playful and agile"),
-            AnimalProfile(7, 2, "Charlie", 2, Gender.MALE, "image7.jpg", "Dog", "Poodle", "Intelligent", 45.0, 22.0, Intent.PLAY, "Very smart and friendly"),
-            AnimalProfile(8, 3, "Lucy", 5, Gender.FEMALE, "image8.jpg", "Cat", "Maine Coon", "Gentle", 35.0, 8.0, Intent.MATE, "Gentle and large"),
-            AnimalProfile(9, 4, "Daisy", 4, Gender.FEMALE, "image9.jpg", "Dog", "Golden Retriever", "Friendly", 55.0, 27.0, Intent.PLAY, "Friendly and easygoing"),
-            AnimalProfile(10, 5, "Simba", 1, Gender.MALE, "image10.jpg", "Cat", "Sphinx", "Affectionate", 32.0, 6.0, Intent.MATE, "Affectionate and unique")
+            AnimalProfile(1, 1, "Buddy", 3, Gender.MALE, "image1.jpg", "Dog", "Labrador", "Friendly", 60.0, 30.0, Intent.PLAY, "Playful and energetic", 1.175494e-38f),
+            AnimalProfile(2, 2, "Mittens", 2, Gender.FEMALE, "image2.jpg", "Cat", "Siamese", "Calm", 25.0, 5.0, Intent.MATE, "Quiet and affectionate", 1.175494e-38f),
+            AnimalProfile(3, 3, "Max", 5, Gender.MALE, "image3.jpg", "Dog", "Beagle", "Curious", 40.0, 20.0, Intent.PLAY, "Loves to explore", 1.175494e-38f),
+            AnimalProfile(4, 4, "Bella", 4, Gender.FEMALE, "image4.jpg", "Cat", "Persian", "Lazy", 30.0, 6.0, Intent.MATE, "Loves to sleep", 1.175494e-38f),
+            AnimalProfile(5, 5, "Rocky", 1, Gender.MALE, "image5.jpg", "Dog", "Bulldog", "Strong", 50.0, 25.0, Intent.PLAY, "Very strong and loyal", 1.175494e-38f),
+            AnimalProfile(6, 1, "Luna", 3, Gender.FEMALE, "image6.jpg", "Cat", "Bengal", "Playful", 28.0, 7.0, Intent.MATE, "Playful and agile", 1.175494e-38f),
+            AnimalProfile(7, 2, "Charlie", 2, Gender.MALE, "image7.jpg", "Dog", "Poodle", "Intelligent", 45.0, 22.0, Intent.PLAY, "Very smart and friendly", 1.175494e-38f),
+            AnimalProfile(8, 3, "Lucy", 5, Gender.FEMALE, "image8.jpg", "Cat", "Maine Coon", "Gentle", 35.0, 8.0, Intent.MATE, "Gentle and large", 1.175494e-38f),
+            AnimalProfile(9, 4, "Daisy", 4, Gender.FEMALE, "image9.jpg", "Dog", "Golden Retriever", "Friendly", 55.0, 27.0, Intent.PLAY, "Friendly and easygoing", 1.175494e-38f),
+            AnimalProfile(10, 5, "Simba", 1, Gender.MALE, "image10.jpg", "Cat", "Sphinx", "Affectionate", 32.0, 6.0, Intent.MATE, "Affectionate and unique", 1.175494e-38f)
         )
 
         animalProfiles.forEach { animalProfileDao.insert(it) }

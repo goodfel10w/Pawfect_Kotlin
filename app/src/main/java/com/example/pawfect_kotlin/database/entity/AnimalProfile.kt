@@ -44,5 +44,8 @@ data class AnimalProfile(
     val intent: Intent,
 
     @ColumnInfo(name = "description")
-    val description: String
+    val description: String,
+
+    @ColumnInfo(name = "distance")
+    val distance: Float
 )

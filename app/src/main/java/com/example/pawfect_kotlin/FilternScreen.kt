@@ -1,8 +1,6 @@
 package com.example.pawfect_kotlin
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -24,11 +22,13 @@ fun FilterScreen(viewModel: FilterViewModel = viewModel()) {
         modifier = Modifier
             .padding(16.dp)
             .padding(start = 32.dp, end = 32.dp)) {
+
+        // Entfernung-Filter
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically ) {
             Icon(
                 painter = painterResource(id = R.drawable.home_24dp_fill0_wght400_grad0_opsz24),
                 contentDescription = "Größe",
-                )
+            )
             Text(
                 text = "Entfernung",
                 fontSize = 12.sp,
@@ -39,20 +39,19 @@ fun FilterScreen(viewModel: FilterViewModel = viewModel()) {
         }
 
         Row(modifier = Modifier.fillMaxWidth().padding(bottom = 4.dp), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically ) {
-            var sliderEntfernungPosition by remember { mutableFloatStateOf(0f) }
-
             Slider(
-                value = sliderEntfernungPosition,
-                onValueChange = { sliderEntfernungPosition = it }
+                value = uiState.distance,
+                onValueChange = { viewModel.updateDistance(it) }
             )
-            Text(text = sliderEntfernungPosition.toString())
+            Text(text = uiState.distance.toString())
         }
 
+        // Absicht-Filter
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically ) {
             Icon(
                 painter = painterResource(id = R.drawable.favorite_24dp_fill0_wght400_grad0_opsz24),
                 contentDescription = "Absicht",
-                )
+            )
             Text(
                 text = "Absicht",
                 fontSize = 12.sp,
@@ -63,31 +62,30 @@ fun FilterScreen(viewModel: FilterViewModel = viewModel()) {
         }
 
         Row(modifier = Modifier.fillMaxWidth().padding(bottom = 4.dp), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically ) {
-            var checkedZuchtpartner by remember { mutableStateOf(true) }
-            var checkedSpielpartner by remember { mutableStateOf(true) }
-
-            Text(
-                "Zuchtpartner"
-            )
-            Checkbox(
-                checked = checkedZuchtpartner,
-                onCheckedChange = { checkedZuchtpartner = it }
-            )
-
-            Text(
-                "Spielpartner"
-            )
-            Checkbox(
-                checked = checkedSpielpartner,
-                onCheckedChange = { checkedSpielpartner = it }
-            )
+            Column {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Text("Zuchtpartner")
+                    Checkbox(
+                        checked = uiState.zuchtpartner,
+                        onCheckedChange = { viewModel.updateZuchtpartner(it) }
+                    )
+                }
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Text("Spielpartner")
+                    Checkbox(
+                        checked = uiState.spielpartner,
+                        onCheckedChange = { viewModel.updateSpielpartner(it) }
+                    )
+                }
+            }
         }
 
+        // Tierart-Filter
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically ) {
             Icon(
                 painter = painterResource(id = R.drawable.pets_24dp_fill0_wght400_grad0_opsz24),
                 contentDescription = "Tierart",
-                )
+            )
             Text(
                 text = "Tierart",
                 fontSize = 12.sp,
@@ -98,31 +96,30 @@ fun FilterScreen(viewModel: FilterViewModel = viewModel()) {
         }
 
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically ) {
-            var checkedHund by remember { mutableStateOf(true) }
-            var checkedKatze by remember { mutableStateOf(true) }
-
-            Text(
-                "Hund"
-            )
-            Checkbox(
-                checked = checkedHund,
-                onCheckedChange = { checkedHund = it }
-            )
-
-            Text(
-                "Katze"
-            )
-            Checkbox(
-                checked = checkedKatze,
-                onCheckedChange = { checkedKatze = it }
-            )
+            Column {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Text("Hund")
+                    Checkbox(
+                        checked = uiState.hund,
+                        onCheckedChange = { viewModel.updateHund(it) }
+                    )
+                }
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Text("Katze")
+                    Checkbox(
+                        checked = uiState.katze,
+                        onCheckedChange = { viewModel.updateKatze(it) }
+                    )
+                }
+            }
         }
 
+        // Alter-Filter
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically ) {
             Icon(
                 painter = painterResource(id = R.drawable.cake_24dp_fill0_wght400_grad0_opsz24),
                 contentDescription = "Alter",
-                )
+            )
             Text(
                 text = "Alter",
                 fontSize = 12.sp,
@@ -132,20 +129,20 @@ fun FilterScreen(viewModel: FilterViewModel = viewModel()) {
                     .padding(end = 4.dp))
         }
 
-        Row(modifier = Modifier.fillMaxWidth().padding(bottom = 4.dp).padding(bottom = 4.dp), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically ) {
-            var sliderAlterPosition by remember { mutableFloatStateOf(0f) }
+        Row(modifier = Modifier.fillMaxWidth().padding(bottom = 4.dp), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically ) {
             Slider(
-                value = sliderAlterPosition,
-                onValueChange = { sliderAlterPosition = it }
+                value = uiState.minAge,
+                onValueChange = { viewModel.updateMinAge(it) }
             )
-            Text(text = sliderAlterPosition.toString())
+            Text(text = uiState.minAge.toString())
         }
 
-        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically,  ) {
+        // Größe-Filter
+        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically ) {
             Icon(
                 painter = painterResource(id = R.drawable.square_foot_24dp_fill0_wght400_grad0_opsz24),
                 contentDescription = "Größe",
-                )
+            )
             Text(
                 text = "Größe",
                 fontSize = 12.sp,
@@ -156,25 +153,23 @@ fun FilterScreen(viewModel: FilterViewModel = viewModel()) {
         }
 
         Row(modifier = Modifier.fillMaxWidth().padding(bottom = 4.dp), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically ) {
-            var sliderGroessePosition by remember { mutableFloatStateOf(0f) }
-
             Slider(
-                value = sliderGroessePosition,
-                onValueChange = { sliderGroessePosition = it }
+                value = uiState.maxSize,
+                onValueChange = { viewModel.updateMaxSize(it) }
             )
-            Text(text = sliderGroessePosition.toString())
+            Text(text = uiState.maxSize.toString())
         }
 
+        // Buttons für Bestätigen und Zurücksetzen
         Row(modifier = Modifier.fillMaxWidth().padding(bottom = 4.dp), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically ) {
-
             Button(
-                onClick = { /* Apply filters and navigate or show results */ },
+                onClick = { viewModel.applyFilters() },
                 colors = ButtonDefaults.buttonColors(containerColor = Color.Black, contentColor = Color.White)
             ) {
                 Text(text = "Bestätigen")
             }
             Button(
-                onClick = { /* Apply filters and navigate or show results */ },
+                onClick = { viewModel.resetFilters() },
                 colors = ButtonDefaults.buttonColors(containerColor = Color.Black, contentColor = Color.White)
             ) {
                 Text(text = "Zurücksetzen")

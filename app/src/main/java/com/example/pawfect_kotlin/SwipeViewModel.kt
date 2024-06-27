@@ -43,6 +43,7 @@ class SwipeViewModel() : ViewModel() {
             size = 60.0,
             weight = 30.0,
             intent = Intent.MATE,
+            distance = 1.175494e-38f,
             description = "Buddy is a friendly and energetic Golden Retriever looking for a loving home."
         )
 
@@ -59,6 +60,7 @@ class SwipeViewModel() : ViewModel() {
             size = 30.0,
             weight = 5.0,
             intent = Intent.PLAY,
+            distance = 1.175494e-38f,
             description = "Whiskers is a curious and playful Siamese cat who loves to explore and cuddle."
         )
 
@@ -75,6 +77,7 @@ class SwipeViewModel() : ViewModel() {
             size = 25.0,
             weight = 2.5,
             intent = Intent.PLAY,
+            distance = 1.175494e-38f,
             description = "Charlie is a calm and gentle Lop rabbit who enjoys a quiet and cozy environment."
         )
 
