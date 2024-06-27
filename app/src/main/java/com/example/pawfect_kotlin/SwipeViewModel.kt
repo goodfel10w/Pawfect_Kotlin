@@ -1,5 +1,6 @@
 package com.example.pawfect_kotlin
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.example.pawfect_kotlin.data.SwipeUiState
 import com.example.pawfect_kotlin.database.entity.AnimalProfile
@@ -11,14 +12,22 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import java.sql.Date
 
+const val TAG = "SwipeActivity"
 
-class SwipeViewModel: ViewModel() {
+class SwipeViewModel() : ViewModel() {
 
-    /**
-     * Cupcake state for this order
-     */
     private val _uiState = MutableStateFlow(SwipeUiState(animalProfiles = getAnimalMockProfiles(), userProfiles = mockUserProfiles() ))
     val uiState: StateFlow<SwipeUiState> = _uiState.asStateFlow()
+
+    fun addLike() {
+        uiState.value.indexOfList.inc()
+        Log.v(TAG, "Like Added for " + _uiState.value.animalProfiles[_uiState.value.indexOfList].animalProfileId)
+    }
+
+    fun addDislike() {
+        uiState.value.indexOfList.inc()
+        Log.v(TAG, "Disliked Added for " + _uiState.value.animalProfiles[_uiState.value.indexOfList].animalProfileId)
+    }
 
     private fun getAnimalMockProfiles(): List<AnimalProfile> {
         val animal1 = AnimalProfile(
