@@ -66,6 +66,8 @@ dependencies {
     implementation(libs.androidx.runner)
     implementation(libs.play.services.drive)
     implementation(libs.generativeai)
+    implementation(libs.androidx.navigation.runtime.ktx)
+    implementation(libs.androidx.navigation.compose)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

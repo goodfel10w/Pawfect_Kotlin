@@ -16,6 +16,7 @@ import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -31,17 +32,25 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.example.pawfect_kotlin.PawfectDestinations
 import com.example.pawfect_kotlin.R
-import androidx.compose.material3.IconButton as IconButton1
 import com.example.pawfect_kotlin.SwipeViewModel
-import com.example.pawfect_kotlin.data.SwipeUiState
+import androidx.compose.material3.IconButton as IconButton1
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MyScreen(viewModel: SwipeViewModel) {
+fun SwipeScreen(
+    viewModel: SwipeViewModel = viewModel(),
+    navController: NavHostController = rememberNavController()) {
     Scaffold(
         topBar = {
             TopAppBar(
@@ -57,7 +66,18 @@ fun MyScreen(viewModel: SwipeViewModel) {
             )
         }
     ) { innerPadding ->
+
         val uiState by viewModel.uiState.collectAsState()
+
+        NavHost(
+            navController = navController,
+            startDestination = PawfectDestinations.Start.name,
+            modifier = Modifier.padding(innerPadding)
+        ) {
+            composable(route = PawfectDestinations.Start.name ) {
+            }
+        }
+
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -73,7 +93,8 @@ fun MyScreen(viewModel: SwipeViewModel) {
                     .padding(8.dp)
             )
             Spacer(modifier = Modifier.height(20.dp))
-            ProfileCard(uiState ,modifier = Modifier)
+            ProfileCard()
+            ProfileInformation()
             BottomAppBarExample()
         }
     }
@@ -81,15 +102,18 @@ fun MyScreen(viewModel: SwipeViewModel) {
 
 @Composable
 private fun ProfileCard(
-    uiState: SwipeUiState,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    viewModel: SwipeViewModel = viewModel()
 ) {
+    val uiState by viewModel.uiState.collectAsState()
+
     Card(
         modifier = modifier
             .background(Color.White)
             .padding(16.dp)
             .clip(RoundedCornerShape(topStart = 12.dp, topEnd = 12.dp))
-            .border(width = 1.dp, color = Color.LightGray),
+            .border(width = 1.dp, color = Color.LightGray)
+            ,
         colors = CardDefaults.cardColors(containerColor = Color.White)
     ) {
         Column(
@@ -97,17 +121,17 @@ private fun ProfileCard(
         ) {
             Box(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .height(300.dp) // Größe des Bildes festlegen
+                    .height(300.dp)
+                    .align(Alignment.CenterHorizontally)
             ) {
                 Image(
-                    painter = painterResource(R.drawable.dog_example), // Ersetze durch deine Bildressource
+                    painter = painterResource(R.drawable.dog_example),
                     contentDescription = null,
                     contentScale = ContentScale.Crop,
                     modifier = Modifier
                         .fillMaxSize()
-
                         .clip(RoundedCornerShape(topStart = 12.dp, topEnd = 12.dp))
+
                 )
             }
             Column(
@@ -121,7 +145,7 @@ private fun ProfileCard(
                     fontWeight = FontWeight.Medium,
                     modifier = Modifier.padding(bottom = 4.dp)
                 )
-                Row{
+                Row {
                     Text(
                         text = uiState.animalProfiles[0].species + ",",
                         fontSize = 12.sp,
@@ -139,6 +163,58 @@ private fun ProfileCard(
                     )
                 }
             }
+        }
+    }
+}
+
+@Composable
+private fun ProfileInformation(viewModel: SwipeViewModel = viewModel()) {
+        val uiState by viewModel.uiState.collectAsState()
+        Column(horizontalAlignment = Alignment.Start,
+                verticalArrangement = Arrangement.Center,
+                modifier = Modifier
+                    .padding(16.dp)
+                    .padding(start = 32.dp, end = 32.dp)) {
+            Row {
+                Icon(
+                    painter = painterResource(id = R.drawable.square_foot_24dp_fill0_wght400_grad0_opsz24),
+                    contentDescription = stringResource(R.string.alter_und_groese),
+
+                )
+                Text(
+                    text = stringResource(R.string.alter) + uiState.animalProfiles[uiState.indexOfList].age.toString()
+                    + ", " + uiState.animalProfiles[uiState.indexOfList].size + " cm",
+                    fontSize = 12.sp,
+                    fontWeight = FontWeight.Medium,
+                    textAlign = TextAlign.End,
+                    modifier = Modifier
+                        .padding(bottom = 4.dp)
+                        .padding(end = 4.dp))
+            }
+            HorizontalDivider(thickness = 1.dp, color = Color.Black, modifier = Modifier.padding(top = 2.dp, bottom = 2.dp))
+            Row {
+                Icon(
+                    painter = painterResource(id = R.drawable.user_attributes_24dp_fill0_wght400_grad0_opsz24),
+                    contentDescription = "Eigenschaften"
+                )
+                Text(
+                    text = uiState.animalProfiles[uiState.indexOfList].characteristics,
+                    fontSize = 12.sp,
+                    fontWeight = FontWeight.Medium,
+                    modifier = Modifier
+                )
+            }
+            HorizontalDivider( thickness = 1.dp, color = Color.Black, modifier = Modifier.padding(top = 2.dp, bottom = 2.dp))
+            Row(horizontalArrangement = Arrangement.Start) {
+                Icon(
+                    painter = painterResource(id = R.drawable.person_24dp_fill0_wght400_grad0_opsz24),
+                    contentDescription = stringResource(R.string.name_des_tierhalters),
+
+                )
+                Text(text = uiState.userProfiles[uiState.indexOfList].firstName + " " + uiState.userProfiles[uiState.indexOfList].lastName,
+                    fontSize = 12.sp,
+                    fontWeight = FontWeight.Medium,
+                    modifier = Modifier)
         }
     }
 }
@@ -193,5 +269,6 @@ fun BottomAppBarExample() {
 @Preview(showBackground = true)
 @Composable
 fun MyScreenPreview() {
-    MyScreen(viewModel = SwipeViewModel())
+    SwipeScreen(viewModel = SwipeViewModel())
 }
+

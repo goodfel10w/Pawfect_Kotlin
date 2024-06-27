@@ -1,3 +1,4 @@
+/*
 package com.example.pawfect_kotlin.database.functions
 
 import com.example.pawfect_kotlin.database.dao.AnimalProfileDao
@@ -22,6 +23,12 @@ fun getAllProfiles(): List<AnimalProfile> {
     val allProfiles = mutableListOf<AnimalProfile>()
     allProfiles.addAll(AnimalProfileDao.getAllAnimalProfiles())
     return allProfiles
+}
+
+//Funktion zur Initialisierung eines leeren Filters
+fun initiateCurrentFilter(): Filter {
+
+    return Filter()
 }
 
 //Funktion zur Anwendung des Filters und Manipulation der Profilliste
@@ -93,4 +100,4 @@ fun onClearFilterButtonClick() {
     currentFilter = getStandardFilter()
     applyFilter(getAllProfiles(), currentFilter)
     showNextProfile()
-}
+}*/
