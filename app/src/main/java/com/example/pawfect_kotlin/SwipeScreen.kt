@@ -141,7 +141,7 @@ private fun ProfileCard(
                     .padding(8.dp)
             ) {
                 Text(
-                    text = uiState.animalProfiles[0].name,
+                    text = uiState.animalProfiles[0].name + ", " + uiState.animalProfiles[uiState.indexOfList].age,
                     fontSize = 22.sp,
                     fontWeight = FontWeight.Medium,
                     modifier = Modifier.padding(bottom = 4.dp)
@@ -179,12 +179,11 @@ private fun ProfileInformation(viewModel: SwipeViewModel = viewModel()) {
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically ) {
                 Icon(
                     painter = painterResource(id = R.drawable.square_foot_24dp_fill0_wght400_grad0_opsz24),
-                    contentDescription = stringResource(R.string.alter_und_groese),
+                    contentDescription = "Größe",
 
                 )
                 Text(
-                    text = stringResource(R.string.alter) + uiState.animalProfiles[uiState.indexOfList].age.toString()
-                    + ", " + uiState.animalProfiles[uiState.indexOfList].size + " cm",
+                    text = uiState.animalProfiles[uiState.indexOfList].size.toString() + " cm",
                     fontSize = 12.sp,
                     fontWeight = FontWeight.Medium,
                     modifier = Modifier
