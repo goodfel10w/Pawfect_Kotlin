@@ -7,9 +7,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.navigation.NavHostController
 import com.example.pawfect_kotlin.ui.theme.Pawfect_KotlinTheme
-import com.example.pawfect_kotlin.SwipeViewModel
 
 
 class MainActivity : ComponentActivity() {
