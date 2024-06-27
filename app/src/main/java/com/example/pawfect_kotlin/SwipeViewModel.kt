@@ -37,13 +37,13 @@ class SwipeViewModel() : ViewModel() {
             age = 3,
             gender = Gender.MALE,
             images = "url_to_image_1",
-            species = "Dog",
+            species = "Hund",
             breed = "Golden Retriever",
-            characteristics = "Friendly, Energetic",
+            characteristics = "Freundlich, Energetisch",
             size = 60.0,
             weight = 30.0,
             intent = Intent.MATE,
-            description = "Buddy is a friendly and energetic Golden Retriever looking for a loving home."
+            description = "Buddy ist ein freundlicher und energetischer Golden Retriever, der ein liebevolles Zuhause sucht."
         )
 
         val animal2 = AnimalProfile(
@@ -53,32 +53,64 @@ class SwipeViewModel() : ViewModel() {
             age = 2,
             gender = Gender.FEMALE,
             images = "url_to_image_2",
-            species = "Cat",
-            breed = "Siamese",
-            characteristics = "Curious, Playful",
+            species = "Katze",
+            breed = "Siam",
+            characteristics = "Neugierig, Verspielt",
             size = 30.0,
             weight = 5.0,
             intent = Intent.PLAY,
-            description = "Whiskers is a curious and playful Siamese cat who loves to explore and cuddle."
+            description = "Whiskers ist eine neugierige und verspielte Siamkatze, die es liebt zu erkunden und zu kuscheln."
         )
 
         val animal3 = AnimalProfile(
             animalProfileId = 3,
             userProfileId = 103,
-            name = "Charlie",
-            age = 1,
-            gender = Gender.MALE,
+            name = "Bella",
+            age = 4,
+            gender = Gender.FEMALE,
             images = "url_to_image_3",
-            species = "Rabbit",
-            breed = "Lop",
-            characteristics = "Calm, Gentle",
-            size = 25.0,
-            weight = 2.5,
-            intent = Intent.PLAY,
-            description = "Charlie is a calm and gentle Lop rabbit who enjoys a quiet and cozy environment."
+            species = "Hund",
+            breed = "Labrador",
+            characteristics = "Liebenswert, Aktiv",
+            size = 55.0,
+            weight = 25.0,
+            intent = Intent.MATE,
+            description = "Bella ist eine liebenswerte und aktive Labradorhündin, die gerne spielt und spazieren geht."
         )
 
-        return listOf(animal1, animal2, animal3)
+        val animal4 = AnimalProfile(
+            animalProfileId = 4,
+            userProfileId = 104,
+            name = "Simba",
+            age = 3,
+            gender = Gender.MALE,
+            images = "url_to_image_4",
+            species = "Katze",
+            breed = "Maine Coon",
+            characteristics = "Unabhängig, Sanft",
+            size = 40.0,
+            weight = 6.5,
+            intent = Intent.MATE,
+            description = "Simba ist eine unabhängige und sanfte Maine Coon, die es liebt, ihre Umgebung zu erkunden."
+        )
+
+        val animal5 = AnimalProfile(
+            animalProfileId = 5,
+            userProfileId = 105,
+            name = "Max",
+            age = 2,
+            gender = Gender.MALE,
+            images = "url_to_image_5",
+            species = "Hund",
+            breed = "Beagle",
+            characteristics = "Lebhaft, Neugierig",
+            size = 40.0,
+            weight = 20.0,
+            intent = Intent.PLAY,
+            description = "Max ist ein lebhafter und neugieriger Beagle, der gerne draußen ist und neue Dinge entdeckt."
+        )
+
+        return listOf(animal1, animal2, animal3, animal4, animal5)
     }
 
     fun mockUserProfiles(): List<UserProfile> {
@@ -92,7 +124,7 @@ class SwipeViewModel() : ViewModel() {
                 password = "password123",
                 isPremium = true,
                 swipesLeft = 10,
-                address = "123 Main St, Springfield, USA"
+                address = "Kaiserstrasse 125, 76131 Karlsruhe"
             ),
             UserProfile(
                 userProfileId = 2,
@@ -103,7 +135,7 @@ class SwipeViewModel() : ViewModel() {
                 password = "securepassword",
                 isPremium = false,
                 swipesLeft = 15,
-                address = "456 Elm St, Metropolis, USA"
+                address = "Kaiserstrasse 125, 76131 Karlsruhe"
             ),
             UserProfile(
                 userProfileId = 3,
@@ -114,7 +146,29 @@ class SwipeViewModel() : ViewModel() {
                 password = "mypassword",
                 isPremium = true,
                 swipesLeft = 5,
-                address = "789 Oak St, Gotham, USA"
+                address = "Kaiserstrasse 125, 76131 Karlsruhe"
+            ),
+            UserProfile(
+                userProfileId = 4,
+                firstName = "Bob",
+                lastName = "Brown",
+                birthDate = Date(1988, 3, 22),
+                email = "bob.brown@example.com",
+                password = "password456",
+                isPremium = false,
+                swipesLeft = 20,
+                address = "Kaiserstrasse 125, 76131 Karlsruhe"
+            ),
+            UserProfile(
+                userProfileId = 5,
+                firstName = "Carol",
+                lastName = "White",
+                birthDate = Date(1995, 11, 19),
+                email = "carol.white@example.com",
+                password = "securepassword789",
+                isPremium = true,
+                swipesLeft = 8,
+                address = "Kaiserstrasse 125, 76131 Karlsruhe"
             )
         )
     }

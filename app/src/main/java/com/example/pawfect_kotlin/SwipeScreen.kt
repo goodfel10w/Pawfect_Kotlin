@@ -40,8 +40,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -148,8 +150,9 @@ private fun ProfileCard(
                     .height(300.dp)
                     .align(Alignment.CenterHorizontally)
             ) {
+                // Workaround mit statischen Bildern, weil dynamisch ohne blob storage schwer ist
                 Image(
-                    painter = painterResource(R.drawable.dog_example),
+                    painter =  painterResource(R.drawable.katze3),
                     contentDescription = null,
                     contentScale = ContentScale.Crop,
                     modifier = Modifier
@@ -164,7 +167,7 @@ private fun ProfileCard(
                     .padding(8.dp)
             ) {
                 Text(
-                    text = uiState.animalProfiles[0].name + ", " + uiState.animalProfiles[uiState.indexOfList].age,
+                    text = uiState.animalProfiles[uiState.indexOfList].name + ", " + uiState.animalProfiles[uiState.indexOfList].age,
                     fontSize = 22.sp,
                     fontWeight = FontWeight.Medium,
                     modifier = Modifier.padding(bottom = 4.dp)
