@@ -107,8 +107,14 @@ fun SwipeScreen(
                     .padding(8.dp)
             )
             Spacer(modifier = Modifier.height(20.dp))
-            ProfileCardWithSwipe(onSwipe = { /*TODO*/ }) {
-                
+            ProfileCardWithSwipe(
+                onSwipeRight = {
+                    viewModel.addLike()
+                },
+                onSwipeLeft = {
+                    viewModel.addDislike()
+                }
+            ) {
             }
             ProfileInformation()
             BottomAppBarExample()
@@ -238,21 +244,25 @@ fun BottomAppBarExample() {
     Scaffold(
         bottomBar = {
             BottomAppBar(
-                contentPadding = PaddingValues(horizontal = 16.dp),
+                contentPadding = PaddingValues(horizontal = 32.dp),
                 modifier = Modifier.background(Color.White)
             ) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween
+                    horizontalArrangement = Arrangement.SpaceAround
                 ) {
                     Column {
-                        IconButton1(onClick = { /* do something */ }) {
+                        IconButton1(onClick = { /*  */ }) {
                             Icon(
                                 painter = painterResource(id = R.drawable.sms_24dp_fill0_wght400_grad0_opsz24),
                                 contentDescription = null // decorative element
                             )
                         }
-                        Text(stringResource(R.string.chats), modifier = Modifier.align(Alignment.CenterHorizontally))
+                        Text(stringResource(
+                            R.string.chats),
+                            modifier = Modifier.align(Alignment.CenterHorizontally),
+                            fontSize = 12.sp,
+                            fontWeight = FontWeight.Medium)
                     }
                     Column{
                         IconButton1(onClick = { /* do something */ }) {
@@ -261,7 +271,12 @@ fun BottomAppBarExample() {
                                 contentDescription = null // decorative element
                             )
                         }
-                        Text(stringResource(R.string.swipen), modifier = Modifier.align(Alignment.CenterHorizontally))
+                        Text(
+                            stringResource(R.string.swipen),
+                            modifier = Modifier.align(Alignment.CenterHorizontally),
+                            fontSize = 12.sp,
+                            fontWeight = FontWeight.Medium
+                        )
                     }
                     Column {
                         IconButton1(onClick = { /* do something */ }) {
@@ -270,7 +285,12 @@ fun BottomAppBarExample() {
                                 contentDescription = null // decorative element
                             )
                         }
-                        Text(stringResource(R.string.profil), modifier = Modifier.align(Alignment.CenterHorizontally))
+                        Text(
+                            stringResource(R.string.profil),
+                            modifier = Modifier.align(Alignment.CenterHorizontally),
+                            fontSize = 12.sp,
+                            fontWeight = FontWeight.Medium
+                        )
                     }
                 }
             }
@@ -284,12 +304,14 @@ fun BottomAppBarExample() {
 fun ProfileCardWithSwipe(
     modifier: Modifier = Modifier,
     draggable: Boolean = true,
-    onSwipe: () -> Unit,
+    onSwipeLeft: () -> Unit,
+    onSwipeRight: () -> Unit,
     content: @Composable () -> Unit
 ) {
     var offsetX by remember { mutableStateOf(0f) }
     var offsetY by remember { mutableStateOf(0f) }
     val sizePx = with(LocalDensity.current) { 300.dp.toPx() }
+    val swipeThreshold = sizePx / 4
 
     val offsetXState = remember { Animatable(0f) }
     val offsetYState = remember { Animatable(0f) }
@@ -302,7 +324,13 @@ fun ProfileCardWithSwipe(
     val gestureDetector = Modifier.pointerInput(Unit) {
         detectDragGestures(
             onDragEnd = {
-                // Reset position when drag ends
+
+                if(offsetX > swipeThreshold) {
+                    onSwipeRight()
+                }
+                if(offsetX < 0) {
+                    onSwipeLeft()
+                }
                 offsetX = 0f
                 offsetY = 0f
             }
