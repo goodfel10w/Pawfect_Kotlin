@@ -50,6 +50,7 @@ class SwipeViewModel() : ViewModel() {
             size = 60.0,
             weight = 30.0,
             intent = Intent.MATE,
+            distance = 11-0f,
             description = "Buddy is a friendly and energetic Golden Retriever looking for a loving home."
         )
 
@@ -66,6 +67,7 @@ class SwipeViewModel() : ViewModel() {
             size = 30.0,
             weight = 5.0,
             intent = Intent.PLAY,
+            distance = 11-0f,
             description = "Whiskers ist eine neugierige und verspielte Siamkatze, die es liebt zu erkunden und zu kuscheln."
         )
 
@@ -82,6 +84,7 @@ class SwipeViewModel() : ViewModel() {
             size = 55.0,
             weight = 25.0,
             intent = Intent.MATE,
+            distance = 11-0f,
             description = "Bella ist eine liebenswerte und aktive Labradorhündin, die gerne spielt und spazieren geht."
         )
 
@@ -98,6 +101,7 @@ class SwipeViewModel() : ViewModel() {
             size = 40.0,
             weight = 6.5,
             intent = Intent.MATE,
+            distance = 11-0f,
             description = "Simba ist eine unabhängige und sanfte Maine Coon, die es liebt, ihre Umgebung zu erkunden."
         )
 
@@ -114,6 +118,7 @@ class SwipeViewModel() : ViewModel() {
             size = 40.0,
             weight = 20.0,
             intent = Intent.PLAY,
+            distance = 11-0f,
             description = "Max ist ein lebhafter und neugieriger Beagle, der gerne draußen ist und neue Dinge entdeckt."
         )
 

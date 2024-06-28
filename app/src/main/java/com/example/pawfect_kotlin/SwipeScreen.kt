@@ -156,6 +156,14 @@ private fun ProfileCard(
                     .height(300.dp)
                     .align(Alignment.CenterHorizontally)
             ) {
+                Image(
+                    painter = painterResource(R.drawable.pawfect_logo),
+                    contentDescription = null,
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .clip(RoundedCornerShape(topStart = 12.dp, topEnd = 12.dp))
+                )
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
