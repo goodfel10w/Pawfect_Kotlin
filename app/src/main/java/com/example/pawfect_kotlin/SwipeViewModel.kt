@@ -54,7 +54,7 @@ class SwipeViewModel() : ViewModel() {
             gender = Gender.MALE,
             images = "url_to_image_1",
             species = "Hund",
-            breed = "Golden Retriever",
+            breed = "Pomeranian",
             characteristics = "Freundlich, Energetisch",
             size = 60.0,
             weight = 30.0,
