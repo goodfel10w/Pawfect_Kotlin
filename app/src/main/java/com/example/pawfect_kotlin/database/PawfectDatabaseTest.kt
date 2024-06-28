@@ -27,6 +27,7 @@ import java.util.Date
 @RunWith(AndroidJUnit4::class)
 class PawfectDatabaseTest {
 
+    // Deklaration der Datenbank und der DAOs
     private lateinit var db: PawfectDatabase
     private lateinit var userProfileDao: UserProfileDao
     private lateinit var animalProfileDao: AnimalProfileDao
@@ -34,6 +35,7 @@ class PawfectDatabaseTest {
     private lateinit var dislikeDao: DislikeDao
     private lateinit var matchDao: MatchDao
 
+    // Einrichtung der in-memory Datenbank vor jedem Test
     @Before
     fun createDb() {
         val context = ApplicationProvider.getApplicationContext<Context>()
@@ -45,11 +47,13 @@ class PawfectDatabaseTest {
         matchDao = db.matchDao()
     }
 
+    // Schließen der Datenbank nach jedem Test
     @After
     fun closeDb() {
         db.close()
     }
 
+    // Testmethode, die sicherstellt, dass die Datenbank korrekt funktioniert
     @Test
     suspend fun testDatabase() {
         val userProfiles = listOf(
@@ -60,8 +64,10 @@ class PawfectDatabaseTest {
             UserProfile(5, "Charlie", "Davis", Date(), "charlie@example.com", "password123", false, 2, "202 Way")
         )
 
+        // Einfügen der Benutzerdaten in die Datenbank
         userProfiles.forEach { userProfileDao.insert(it) }
 
+        // Beispieldaten für Tierprofile hinzufügen
         val animalProfiles = listOf(
             AnimalProfile(1, 1, "Buddy", 3, Gender.MALE, "image1.jpg", "Dog", "Labrador", "Friendly", 60.0, 30.0, Intent.PLAY, "Playful and energetic", 1.175494e-38f),
             AnimalProfile(2, 2, "Mittens", 2, Gender.FEMALE, "image2.jpg", "Cat", "Siamese", "Calm", 25.0, 5.0, Intent.MATE, "Quiet and affectionate", 1.175494e-38f),
@@ -75,27 +81,34 @@ class PawfectDatabaseTest {
             AnimalProfile(10, 5, "Simba", 1, Gender.MALE, "image10.jpg", "Cat", "Sphinx", "Affectionate", 32.0, 6.0, Intent.MATE, "Affectionate and unique", 1.175494e-38f)
         )
 
+        // Einfügen der Tierprofile in die Datenbank
         animalProfiles.forEach { animalProfileDao.insert(it) }
 
+        // Beispieldaten für Likes hinzufügen
         val likes = listOf(
             Like(1, 1, 2, Date()), Like(2, 3, 4, Date()), Like(3, 5, 6, Date()),
             Like(4, 7, 8, Date()), Like(5, 9, 10, Date())
         )
 
+        // Einfügen der Likes in die Datenbank
         likes.forEach { likeDao.insert(it) }
 
+        // Beispieldaten für Dislikes hinzufügen
         val dislikes = listOf(
             Dislike(1, 2, 3, Date()), Dislike(2, 4, 5, Date()), Dislike(3, 6, 7, Date()),
             Dislike(4, 8, 9, Date()), Dislike(5, 10, 1, Date())
         )
 
+        // Einfügen der Dislikes in die Datenbank
         dislikes.forEach { dislikeDao.insert(it) }
 
+        // Beispieldaten für Matches hinzufügen
         val matches = listOf(
             Match(1, 1, 2, Date()), Match(2, 3, 4, Date()), Match(3, 5, 6, Date()),
             Match(4, 7, 8, Date()), Match(5, 9, 10, Date())
         )
 
+        // Einfügen der Matches in die Datenbank
         matches.forEach { matchDao.insert(it) }
 
         // Überprüfen, ob die Einfügungen erfolgreich waren
