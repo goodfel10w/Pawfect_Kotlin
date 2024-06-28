@@ -1,26 +1,8 @@
 package com.example.pawfect_kotlin
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Checkbox
-import androidx.compose.material3.CheckboxDefaults
-import androidx.compose.material3.Icon
-import androidx.compose.material3.Slider
-import androidx.compose.material3.SliderDefaults
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableFloatStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.foundation.layout.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -38,9 +20,6 @@ import androidx.navigation.compose.rememberNavController
 fun FilterScreen(viewModel: FilterViewModel = viewModel(),
                  navController: NavController) {
     val uiState by viewModel.uiState.collectAsState()
-    var sliderEntfernungPosition by remember { mutableFloatStateOf(0f) }
-    var sliderAlterPosition by remember { mutableFloatStateOf(0f) }
-    var sliderGroessePosition by remember { mutableFloatStateOf(0f) }
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -50,8 +29,10 @@ fun FilterScreen(viewModel: FilterViewModel = viewModel(),
             .padding(start = 32.dp, end = 32.dp)
     )
     {
+        //Abstand zur Decke
         Spacer(modifier = Modifier.height(32.dp))
 
+        //Icon und Text für die Entfernung-Elemente
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
@@ -59,7 +40,7 @@ fun FilterScreen(viewModel: FilterViewModel = viewModel(),
         ) {
             Icon(
                 painter = painterResource(id = R.drawable.home_24dp_fill0_wght400_grad0_opsz24),
-                contentDescription = "Größe",
+                contentDescription = "Entfernung",
             )
             Text(
                 text = "Entfernung",
@@ -71,13 +52,13 @@ fun FilterScreen(viewModel: FilterViewModel = viewModel(),
             )
         }
 
+        //Slider für Entfernung und speichern der Slider Postition
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         )
         {
-
             Slider(
                 value = uiState.distance,
                 onValueChange = { viewModel.updateDistance(it) },
@@ -86,15 +67,18 @@ fun FilterScreen(viewModel: FilterViewModel = viewModel(),
                     activeTrackColor = Color.Black,
                     inactiveTrackColor = Color.Gray
                 ),
+                //Wertespektrum und Abstufungengen, damit man nur ganze Zahlen auswählen kann
                 steps = 99,
                 valueRange = 0f..100f
             )
         }
+        //Aktuelle Positions des Sliders ausgeben
         Text(text = uiState.distance.toString() + " km")
 
+        //Abstand zu dem nächsten Attribut
         Spacer(modifier = Modifier.height(16.dp))
 
-        // Absicht-Filter
+        // Absicht-Filter mit Text und der Icon
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
@@ -114,6 +98,7 @@ fun FilterScreen(viewModel: FilterViewModel = viewModel(),
             )
         }
 
+        //Die Checkboxen um die verschiedenen Absichten auszuwählen
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
@@ -143,10 +128,10 @@ fun FilterScreen(viewModel: FilterViewModel = viewModel(),
                 )
             }
         }
-
+        //Abstand zu dem nächsten Attribut
         Spacer(modifier = Modifier.height(16.dp))
 
-        // Tierart-Filter
+        // Tierart-Filter mit Text und Icon
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
@@ -166,6 +151,7 @@ fun FilterScreen(viewModel: FilterViewModel = viewModel(),
             )
         }
 
+        //Checkboxen mit denen man die Tierarten auswählen kann
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
@@ -195,7 +181,7 @@ fun FilterScreen(viewModel: FilterViewModel = viewModel(),
                 )
             }
         }
-
+        //Abstand zu dem nächsten Attribut
         Spacer(modifier = Modifier.height(16.dp))
 
         // Alter-Filter
@@ -218,7 +204,7 @@ fun FilterScreen(viewModel: FilterViewModel = viewModel(),
                     .padding(end = 4.dp)
             )
         }
-
+        //Slider um Alter auswählen zu können
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
@@ -233,12 +219,15 @@ fun FilterScreen(viewModel: FilterViewModel = viewModel(),
                     activeTrackColor = Color.Black,
                     inactiveTrackColor = Color.Gray
                 ),
+                //Wertespektrum und Abstufungengen, damit man nur ganze Zahlen auswählen kann
                 steps = 19,
                 valueRange = 0f..20f
             )
         }
+        //Positions des Sliders ausgeben
         Text(text = uiState.minAge.toString() + " Jahre")
 
+        //Abstand zu dem nächsten Attribut
         Spacer(modifier = Modifier.height(16.dp))
 
         // Größe-Filter
@@ -262,6 +251,7 @@ fun FilterScreen(viewModel: FilterViewModel = viewModel(),
             )
         }
 
+        //Slider zum auswählen der Größe
         Row(
             modifier = Modifier
                 .fillMaxWidth(),
@@ -277,12 +267,15 @@ fun FilterScreen(viewModel: FilterViewModel = viewModel(),
                     activeTrackColor = Color.Black,
                     inactiveTrackColor = Color.Gray
                 ),
+                //Wertespektrum und Abstufungengen, damit man nur ganze Zahlen auswählen kann
                 steps = 99,
                 valueRange = 0f..100f
             )
         }
+        //Positions des Sliders ausgeben
         Text(text = uiState.maxSize.toString() + " cm")
 
+        //Abstand zu dem nächsten Attribut
         Spacer(modifier = Modifier.height(16.dp))
 
         // Buttons für Bestätigen und Zurücksetzen
@@ -296,7 +289,7 @@ fun FilterScreen(viewModel: FilterViewModel = viewModel(),
         {
             Button(
                 onClick = {
-                    //viewModel.applyFilters()
+                    viewModel.applyFilters()
                     navController.navigate(PawfectDestinations.Start.name)
                 },
                 colors = ButtonDefaults.buttonColors(
