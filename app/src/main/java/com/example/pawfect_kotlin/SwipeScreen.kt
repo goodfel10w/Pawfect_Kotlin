@@ -163,7 +163,12 @@ private fun ProfileCard(
             ) {
                 UseCorrectProfilePictureUnfiltered(uiState = uiState)
                 if( uiState.matchExists) {
-                    CongratulatoryScreen()
+                    AlertDialogMatch(
+                        onDismissRequest = { viewModel.consumeMatch() },
+                        onConfirmation = { viewModel.consumeMatch() },
+                        dialogTitle = "Es ist ein MATCH!",
+                        dialogText = "Herzlichen Glückwünsch"
+                    )
                 }
             }
             Column(
@@ -197,48 +202,6 @@ private fun ProfileCard(
             }
         }
     }
-}
-
-@Composable
-fun MessageEmptyDialog(
-    onDismissRequest: () -> Unit,
-    onConfirmation: () -> Unit,
-    dialogTitle: String,
-    dialogText: String,
-    icon: ImageVector,
-) {
-    AlertDialog(
-        icon = {
-            Icon(icon, contentDescription = "Example Icon")
-        },
-        title = {
-            Text(text = dialogTitle)
-        },
-        text = {
-            Text(text = dialogText)
-        },
-        onDismissRequest = {
-            onDismissRequest()
-        },
-        confirmButton = {
-            TextButton(
-                onClick = {
-                    onConfirmation()
-                }
-            ) {
-                Text("Confirm")
-            }
-        },
-        dismissButton = {
-            TextButton(
-                onClick = {
-                    onDismissRequest()
-                }
-            ) {
-                Text("Dismiss")
-            }
-        }
-    )
 }
 
 @Composable
@@ -440,6 +403,45 @@ fun ProfileCardWithSwipe(
             this.alpha = alpha
         }
         .then(gestureDetector)
+    )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun AlertDialogMatch(
+    onDismissRequest: () -> Unit,
+    onConfirmation: () -> Unit,
+    dialogTitle: String,
+    dialogText: String,
+) {
+    AlertDialog(
+        title = {
+            Text(text = dialogTitle)
+        },
+        text = {
+            Text(text = dialogText)
+        },
+        onDismissRequest = {
+            onDismissRequest()
+        },
+        confirmButton = {
+            TextButton(
+                onClick = {
+                    onConfirmation()
+                }
+            ) {
+                Text("Confirm")
+            }
+        },
+        dismissButton = {
+            TextButton(
+                onClick = {
+                    onDismissRequest()
+                }
+            ) {
+                Text("Dismiss")
+            }
+        }
     )
 }
 

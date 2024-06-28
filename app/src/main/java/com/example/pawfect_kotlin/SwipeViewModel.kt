@@ -53,6 +53,11 @@ class SwipeViewModel() : ViewModel() {
         _uiState.value = _uiState.value.copy(matchExists = true)
     }
 
+    fun consumeMatch() {
+        _uiState.value = _uiState.value.copy(matchExists = false)
+    }
+
+
     private fun getAnimalMockProfiles(): List<AnimalProfile> {
         val animal1 = AnimalProfile(
             animalProfileId = 1,
