@@ -1,6 +1,8 @@
 package com.example.pawfect_kotlin
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -12,9 +14,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 
 @Composable
-fun FilterScreen(viewModel: FilterViewModel = viewModel()) {
+fun FilterScreen(viewModel: FilterViewModel = viewModel(),
+                 navController: NavController) {
     val uiState by viewModel.uiState.collectAsState()
 
     Column(horizontalAlignment = Alignment.Start,
@@ -28,7 +33,7 @@ fun FilterScreen(viewModel: FilterViewModel = viewModel()) {
             Icon(
                 painter = painterResource(id = R.drawable.home_24dp_fill0_wght400_grad0_opsz24),
                 contentDescription = "Größe",
-            )
+                )
             Text(
                 text = "Entfernung",
                 fontSize = 12.sp,
@@ -181,5 +186,5 @@ fun FilterScreen(viewModel: FilterViewModel = viewModel()) {
 @Preview(showBackground = true)
 @Composable
 fun MyFilterPreview(){
-    FilterScreen()
+    FilterScreen(navController = rememberNavController())
 }
