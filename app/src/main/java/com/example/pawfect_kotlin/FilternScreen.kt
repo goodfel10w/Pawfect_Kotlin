@@ -21,13 +21,19 @@ import androidx.navigation.compose.rememberNavController
 fun FilterScreen(viewModel: FilterViewModel = viewModel(),
                  navController: NavController) {
     val uiState by viewModel.uiState.collectAsState()
+    var sliderEntfernungPosition by remember { mutableFloatStateOf(0f) }
+    var sliderAlterPosition by remember { mutableFloatStateOf(0f) }
+    var sliderGroessePosition by remember { mutableFloatStateOf(0f) }
 
     Column(horizontalAlignment = Alignment.Start,
         verticalArrangement = Arrangement.Center,
         modifier = Modifier
             .padding(16.dp)
             .padding(start = 32.dp, end = 32.dp)) {
-        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically ) {
+        Row(modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically )
+        {
             Icon(
                 painter = painterResource(id = R.drawable.home_24dp_fill0_wght400_grad0_opsz24),
                 contentDescription = "Größe",
@@ -38,13 +44,14 @@ fun FilterScreen(viewModel: FilterViewModel = viewModel(),
                 fontWeight = FontWeight.Medium,
                 modifier = Modifier
                     .padding(bottom = 4.dp)
-                    .padding(end = 4.dp))
+                    .padding(end = 4.dp)
+            )
         }
 
-        Row(modifier = Modifier
-            .fillMaxWidth()
-            .padding(bottom = 4.dp), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically ) {
-            var sliderEntfernungPosition by remember { mutableFloatStateOf(0f) }
+        Row(modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically )
+        {
 
             Slider(
                 value = sliderEntfernungPosition,
@@ -53,12 +60,19 @@ fun FilterScreen(viewModel: FilterViewModel = viewModel(),
                     thumbColor=Color.Black,
                     activeTrackColor=Color.Black,
                     inactiveTrackColor=Color.Gray
-                )
+                ),
+                steps = 99,
+                valueRange = 0f..100f
             )
-            Text(text = sliderEntfernungPosition.toString())
         }
+        Text(text = sliderEntfernungPosition.toString() + " km")
 
-        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically ) {
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Row(modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically )
+        {
             Icon(
                 painter = painterResource(id = R.drawable.favorite_24dp_fill0_wght400_grad0_opsz24),
                 contentDescription = "Absicht",
@@ -69,12 +83,14 @@ fun FilterScreen(viewModel: FilterViewModel = viewModel(),
                 fontWeight = FontWeight.Medium,
                 modifier = Modifier
                     .padding(bottom = 4.dp)
-                    .padding(end = 4.dp))
+                    .padding(end = 4.dp)
+            )
         }
 
-        Row(modifier = Modifier
-            .fillMaxWidth()
-            .padding(bottom = 4.dp), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically ) {
+        Row(modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically )
+        {
             var checkedZuchtpartner by remember { mutableStateOf(true) }
             var checkedSpielpartner by remember { mutableStateOf(true) }
 
@@ -88,7 +104,6 @@ fun FilterScreen(viewModel: FilterViewModel = viewModel(),
                     checkedColor=Color.Black,
                     uncheckedColor=Color.Gray
                 )
-
             )
 
             Text(
@@ -104,7 +119,12 @@ fun FilterScreen(viewModel: FilterViewModel = viewModel(),
             )
         }
 
-        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically ) {
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Row(modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically )
+        {
             Icon(
                 painter = painterResource(id = R.drawable.pets_24dp_fill0_wght400_grad0_opsz24),
                 contentDescription = "Tierart",
@@ -118,7 +138,10 @@ fun FilterScreen(viewModel: FilterViewModel = viewModel(),
                     .padding(end = 4.dp))
         }
 
-        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically ) {
+        Row(modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically )
+        {
             var checkedHund by remember { mutableStateOf(true) }
             var checkedKatze by remember { mutableStateOf(true) }
 
@@ -147,7 +170,12 @@ fun FilterScreen(viewModel: FilterViewModel = viewModel(),
             )
         }
 
-        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically ) {
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Row(modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically )
+        {
             Icon(
                 painter = painterResource(id = R.drawable.cake_24dp_fill0_wght400_grad0_opsz24),
                 contentDescription = "Alter",
@@ -161,11 +189,10 @@ fun FilterScreen(viewModel: FilterViewModel = viewModel(),
                     .padding(end = 4.dp))
         }
 
-        Row(modifier = Modifier
-            .fillMaxWidth()
-            .padding(bottom = 4.dp)
-            .padding(bottom = 4.dp), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically ) {
-            var sliderAlterPosition by remember { mutableFloatStateOf(0f) }
+        Row(modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically )
+        {
             Slider(
                 value = sliderAlterPosition,
                 onValueChange = { sliderAlterPosition = it },
@@ -173,12 +200,19 @@ fun FilterScreen(viewModel: FilterViewModel = viewModel(),
                     thumbColor=Color.Black,
                     activeTrackColor=Color.Black,
                     inactiveTrackColor=Color.Gray
-                )
+                ),
+                steps = 19,
+                valueRange = 0f..20f
             )
-            Text(text = sliderAlterPosition.toString())
         }
+        Text(text = sliderAlterPosition.toString() + " Jahre")
 
-        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically,  ) {
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Row(modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically,  )
+        {
             Icon(
                 painter = painterResource(id = R.drawable.square_foot_24dp_fill0_wght400_grad0_opsz24),
                 contentDescription = "Größe",
@@ -193,9 +227,10 @@ fun FilterScreen(viewModel: FilterViewModel = viewModel(),
         }
 
         Row(modifier = Modifier
-            .fillMaxWidth()
-            .padding(bottom = 4.dp), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically ) {
-            var sliderGroessePosition by remember { mutableFloatStateOf(0f) }
+            .fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically )
+        {
 
             Slider(
                 value = sliderGroessePosition,
@@ -204,14 +239,21 @@ fun FilterScreen(viewModel: FilterViewModel = viewModel(),
                     thumbColor=Color.Black,
                     activeTrackColor=Color.Black,
                     inactiveTrackColor=Color.Gray
-                )
+                ),
+                steps = 99,
+                valueRange = 0f..100f
             )
-            Text(text = sliderGroessePosition.toString())
         }
+        Text(text = sliderGroessePosition.toString() + " cm")
+
+        Spacer(modifier = Modifier.height(16.dp))
 
         Row(modifier = Modifier
             .fillMaxWidth()
-            .padding(bottom = 4.dp), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically ) {
+            .padding(bottom = 4.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically )
+        {
 
             Button(
                 onClick = { /* Apply filters and navigate or show results */ },
