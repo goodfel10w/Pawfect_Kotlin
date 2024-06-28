@@ -15,6 +15,7 @@ import com.example.pawfect_kotlin.database.dao.DislikeDao
 import com.example.pawfect_kotlin.database.dao.LikeDao
 import com.example.pawfect_kotlin.database.dao.MatchDao
 
+// Annotation zur Definition der Room-Datenbank
 @Database(
     entities = [
         UserProfile::class,
@@ -28,6 +29,7 @@ import com.example.pawfect_kotlin.database.dao.MatchDao
 )
 abstract class PawfectDatabase : RoomDatabase() {
 
+    // Abstrakte Methoden zur Rückgabe der DAO-Instanzen
     abstract fun userProfileDao(): UserProfileDao
     abstract fun animalProfileDao(): AnimalProfileDao
     abstract fun dislikeDao(): DislikeDao
@@ -38,7 +40,9 @@ abstract class PawfectDatabase : RoomDatabase() {
         @Volatile
         private var INSTANCE: PawfectDatabase? = null
 
+        // Methode zur Rückgabe der Datenbankinstanz
         fun getDatabase(context: Context): PawfectDatabase {
+            // Doppelt überprüfte Sperre zur Sicherstellung eines Thread-sicheren Zugriffs
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
