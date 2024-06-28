@@ -29,6 +29,13 @@ class SwipeViewModel() : ViewModel() {
         Log.v(TAG, "Disliked Added for " + _uiState.value.animalProfiles[_uiState.value.indexOfList].animalProfileId + "index = " + _uiState.value.indexOfList)
     }
 
+    private fun checkForEndOfProfiles() {
+        if (_uiState.value.animalProfiles.size == _uiState.value.indexOfList) {
+            //List End reached
+            _uiState.value = _uiState.value.copy(noMoreProfilesLoaded = true)
+        }
+    }
+
     private fun getAnimalMockProfiles(): List<AnimalProfile> {
         val animal1 = AnimalProfile(
             animalProfileId = 1,

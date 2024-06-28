@@ -19,6 +19,9 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Refresh
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -27,6 +30,7 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -40,6 +44,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
@@ -62,6 +67,7 @@ import com.example.pawfect_kotlin.FilterScreen
 import com.example.pawfect_kotlin.PawfectDestinations
 import com.example.pawfect_kotlin.R
 import com.example.pawfect_kotlin.SwipeViewModel
+import com.example.pawfect_kotlin.data.SwipeUiState
 import kotlin.math.absoluteValue
 import androidx.compose.material3.IconButton as IconButton1
 
@@ -150,44 +156,34 @@ private fun ProfileCard(
                     .height(300.dp)
                     .align(Alignment.CenterHorizontally)
             ) {
-                // Workaround mit statischen Bildern, weil dynamisch ohne blob storage schwer ist
-                Image(
-                    painter =  painterResource(R.drawable.katze3),
-                    contentDescription = null,
-                    contentScale = ContentScale.Crop,
+                Column(
                     modifier = Modifier
-                        .fillMaxSize()
-                        .clip(RoundedCornerShape(topStart = 12.dp, topEnd = 12.dp))
-
-                )
-            }
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(8.dp)
-            ) {
-                Text(
-                    text = uiState.animalProfiles[uiState.indexOfList].name + ", " + uiState.animalProfiles[uiState.indexOfList].age,
-                    fontSize = 22.sp,
-                    fontWeight = FontWeight.Medium,
-                    modifier = Modifier.padding(bottom = 4.dp)
-                )
-                Row {
+                        .fillMaxWidth()
+                        .padding(8.dp)
+                ) {
                     Text(
-                        text = uiState.animalProfiles[0].species + ",",
-                        fontSize = 12.sp,
+                        text = uiState.animalProfiles[uiState.indexOfList].name + ", " + uiState.animalProfiles[uiState.indexOfList].age,
+                        fontSize = 22.sp,
                         fontWeight = FontWeight.Medium,
-                        modifier = Modifier
-                            .padding(bottom = 4.dp)
-                            .padding(end = 4.dp)
+                        modifier = Modifier.padding(bottom = 4.dp)
                     )
-                    Text(
-                        text = uiState.animalProfiles[0].breed,
-                        fontSize = 12.sp,
-                        fontWeight = FontWeight.Medium,
-                        modifier = Modifier
-                            .padding(bottom = 4.dp)
-                    )
+                    Row {
+                        Text(
+                            text = uiState.animalProfiles[0].species + ",",
+                            fontSize = 12.sp,
+                            fontWeight = FontWeight.Medium,
+                            modifier = Modifier
+                                .padding(bottom = 4.dp)
+                                .padding(end = 4.dp)
+                        )
+                        Text(
+                            text = uiState.animalProfiles[0].breed,
+                            fontSize = 12.sp,
+                            fontWeight = FontWeight.Medium,
+                            modifier = Modifier
+                                .padding(bottom = 4.dp)
+                        )
+                    }
                 }
             }
         }
@@ -195,7 +191,49 @@ private fun ProfileCard(
 }
 
 @Composable
-private fun ProfileInformation(viewModel: SwipeViewModel = viewModel()) {
+fun MessageEmptyDialog(
+    onDismissRequest: () -> Unit,
+    onConfirmation: () -> Unit,
+    dialogTitle: String,
+    dialogText: String,
+    icon: ImageVector,
+    ) {
+    AlertDialog(
+        icon = {
+            Icon(icon, contentDescription = "Example Icon", )
+        },
+        title = {
+            Text(text = dialogTitle)
+        },
+        text = {
+            Text(text = dialogText)
+        },
+        onDismissRequest = {
+            onDismissRequest()
+        },
+        confirmButton = {
+            TextButton(
+                onClick = {
+                    onConfirmation()
+                }
+            ) {
+                Text("Confirm")
+            }
+        },
+        dismissButton = {
+            TextButton(
+                onClick = {
+                    onDismissRequest()
+                }
+            ) {
+                Text("Dismiss")
+            }
+        }
+    )
+}
+
+@Composable
+fun ProfileInformation(viewModel: SwipeViewModel = viewModel()) {
         val uiState by viewModel.uiState.collectAsState()
         Column(horizontalAlignment = Alignment.Start,
                 verticalArrangement = Arrangement.Center,
@@ -375,3 +413,71 @@ fun MyScreenPreview() {
     SwipeScreen(viewModel = SwipeViewModel())
 }
 
+@Composable
+fun UseCorrectProfilePictureUnfiltered(uiState: SwipeUiState) {
+    if (uiState.indexOfList == 0) {
+        Image(
+            painter = painterResource(R.drawable.hund1),
+            contentDescription = null,
+            contentScale = ContentScale.Crop,
+            modifier = Modifier
+                .fillMaxSize()
+                .clip(RoundedCornerShape(topStart = 12.dp, topEnd = 12.dp))
+        )
+    }
+
+    if (uiState.indexOfList == 1) {
+        Image(
+            painter = painterResource(R.drawable.katze2),
+            contentDescription = null,
+            contentScale = ContentScale.Crop,
+            modifier = Modifier
+                .fillMaxSize()
+                .clip(RoundedCornerShape(topStart = 12.dp, topEnd = 12.dp))
+        )
+    }
+
+    if (uiState.indexOfList == 2) {
+        Image(
+            painter = painterResource(R.drawable.katze3),
+            contentDescription = null,
+            contentScale = ContentScale.Crop,
+            modifier = Modifier
+                .fillMaxSize()
+                .clip(RoundedCornerShape(topStart = 12.dp, topEnd = 12.dp))
+        )
+    }
+
+    if (uiState.indexOfList == 3) {
+        Image(
+            painter = painterResource(R.drawable.katze4),
+            contentDescription = null,
+            contentScale = ContentScale.Crop,
+            modifier = Modifier
+                .fillMaxSize()
+                .clip(RoundedCornerShape(topStart = 12.dp, topEnd = 12.dp))
+        )
+    }
+
+    if (uiState.indexOfList == 4) {
+        Image(
+            painter = painterResource(R.drawable.hund5),
+            contentDescription = null,
+            contentScale = ContentScale.Crop,
+            modifier = Modifier
+                .fillMaxSize()
+                .clip(RoundedCornerShape(topStart = 12.dp, topEnd = 12.dp))
+        )
+    }
+
+    if (uiState.indexOfList == 5) {
+        Image(
+            painter = painterResource(R.drawable.katze3),
+            contentDescription = null,
+            contentScale = ContentScale.Crop,
+            modifier = Modifier
+                .fillMaxSize()
+                .clip(RoundedCornerShape(topStart = 12.dp, topEnd = 12.dp))
+        )
+    }
+}

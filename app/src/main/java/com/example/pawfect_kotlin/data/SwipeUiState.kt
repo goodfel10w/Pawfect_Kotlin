@@ -10,4 +10,5 @@ data class SwipeUiState(
     val indexOfList: Int = 0,
     val currentFilter: Filter = getStandardFilter(),
     val userProfiles: List<UserProfile>,
+    val noMoreProfilesLoaded: Boolean = false,
 )

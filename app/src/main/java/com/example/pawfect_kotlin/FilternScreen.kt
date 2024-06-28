@@ -14,9 +14,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 
 @Composable
-fun FilterScreen(viewModel: FilterViewModel = viewModel()) {
+fun FilterScreen(viewModel: FilterViewModel = viewModel(),
+                 navController: NavController) {
     val uiState by viewModel.uiState.collectAsState()
 
     Column(horizontalAlignment = Alignment.Start,
@@ -38,7 +41,9 @@ fun FilterScreen(viewModel: FilterViewModel = viewModel()) {
                     .padding(end = 4.dp))
         }
 
-        Row(modifier = Modifier.fillMaxWidth().padding(bottom = 4.dp), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically ) {
+        Row(modifier = Modifier
+            .fillMaxWidth()
+            .padding(bottom = 4.dp), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically ) {
             var sliderEntfernungPosition by remember { mutableFloatStateOf(0f) }
 
             Slider(
@@ -67,7 +72,9 @@ fun FilterScreen(viewModel: FilterViewModel = viewModel()) {
                     .padding(end = 4.dp))
         }
 
-        Row(modifier = Modifier.fillMaxWidth().padding(bottom = 4.dp), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically ) {
+        Row(modifier = Modifier
+            .fillMaxWidth()
+            .padding(bottom = 4.dp), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically ) {
             var checkedZuchtpartner by remember { mutableStateOf(true) }
             var checkedSpielpartner by remember { mutableStateOf(true) }
 
@@ -154,7 +161,10 @@ fun FilterScreen(viewModel: FilterViewModel = viewModel()) {
                     .padding(end = 4.dp))
         }
 
-        Row(modifier = Modifier.fillMaxWidth().padding(bottom = 4.dp).padding(bottom = 4.dp), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically ) {
+        Row(modifier = Modifier
+            .fillMaxWidth()
+            .padding(bottom = 4.dp)
+            .padding(bottom = 4.dp), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically ) {
             var sliderAlterPosition by remember { mutableFloatStateOf(0f) }
             Slider(
                 value = sliderAlterPosition,
@@ -182,7 +192,9 @@ fun FilterScreen(viewModel: FilterViewModel = viewModel()) {
                     .padding(end = 4.dp))
         }
 
-        Row(modifier = Modifier.fillMaxWidth().padding(bottom = 4.dp), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically ) {
+        Row(modifier = Modifier
+            .fillMaxWidth()
+            .padding(bottom = 4.dp), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically ) {
             var sliderGroessePosition by remember { mutableFloatStateOf(0f) }
 
             Slider(
@@ -197,7 +209,9 @@ fun FilterScreen(viewModel: FilterViewModel = viewModel()) {
             Text(text = sliderGroessePosition.toString())
         }
 
-        Row(modifier = Modifier.fillMaxWidth().padding(bottom = 4.dp), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically ) {
+        Row(modifier = Modifier
+            .fillMaxWidth()
+            .padding(bottom = 4.dp), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically ) {
 
             Button(
                 onClick = { /* Apply filters and navigate or show results */ },
@@ -218,5 +232,5 @@ fun FilterScreen(viewModel: FilterViewModel = viewModel()) {
 @Preview(showBackground = true)
 @Composable
 fun MyFilterPreview(){
-    FilterScreen()
+    FilterScreen(navController = rememberNavController())
 }
