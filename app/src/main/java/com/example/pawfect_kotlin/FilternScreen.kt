@@ -183,8 +183,9 @@ fun FilterScreen(viewModel: FilterViewModel = viewModel(),
     }
 }
 
+/*
 @Preview(showBackground = true)
 @Composable
 fun MyFilterPreview(){
     FilterScreen(navController = rememberNavController())
-}
+}*/

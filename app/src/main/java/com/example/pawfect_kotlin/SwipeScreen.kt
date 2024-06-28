@@ -91,6 +91,9 @@ fun SwipeScreen(
                     }
                 },
             )
+        },
+        bottomBar = {
+            BottomAppBarExample()
         }
     ) { innerPadding ->
 
@@ -112,6 +115,7 @@ fun SwipeScreen(
             )
             Spacer(modifier = Modifier.height(20.dp))
             ProfileCardWithSwipe(
+                uiState = uiState,
                 onSwipeRight = {
                     viewModel.addLike()
                 },
@@ -120,7 +124,6 @@ fun SwipeScreen(
                 }
             )
             ProfileInformation()
-            BottomAppBarExample()
         }
     }
 }
@@ -134,7 +137,6 @@ private fun ProfileCard(
 
     Card(
         modifier = modifier
-            .background(Color.White)
             .padding(16.dp)
             .clip(RoundedCornerShape(topStart = 12.dp, topEnd = 12.dp))
             .border(width = 1.dp, color = Color.LightGray),
@@ -303,12 +305,13 @@ fun ProfileInformation(viewModel: SwipeViewModel = viewModel()) {
 @Composable
 fun BottomAppBarExample() {
     BottomAppBar(
-        contentPadding = PaddingValues(horizontal = 32.dp),
+        contentPadding = PaddingValues(horizontal = 0.dp),
         modifier = Modifier
-            .background(Color.White)
     ) {
         Row(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth()
+                .fillMaxSize()
+                .fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceAround
         ) {
             Column {
@@ -361,6 +364,7 @@ fun BottomAppBarExample() {
 
 @Composable
 fun ProfileCardWithSwipe(
+    uiState: SwipeUiState,
     modifier: Modifier = Modifier,
     draggable: Boolean = true,
     onSwipeLeft: () -> Unit,

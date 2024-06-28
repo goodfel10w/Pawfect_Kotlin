@@ -2,20 +2,11 @@ package com.example.pawfect_kotlin
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.pawfect_kotlin.data.FilterUiState
 import com.example.pawfect_kotlin.database.dao.AnimalProfileDao
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-
-data class FilterUiState(
-    val distance: Float = 0f,
-    val zuchtpartner: Boolean = true,
-    val spielpartner: Boolean = true,
-    val hund: Boolean = true,
-    val katze: Boolean = true,
-    val minAge: Float = 0f,
-    val maxSize: Float = 0f
-)
 
 class FilterViewModel(private val animalProfileDao: AnimalProfileDao) : ViewModel() {
 
