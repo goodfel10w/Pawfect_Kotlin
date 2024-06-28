@@ -21,12 +21,19 @@ import androidx.navigation.compose.rememberNavController
 fun FilterScreen(viewModel: FilterViewModel = viewModel(),
                  navController: NavController) {
     val uiState by viewModel.uiState.collectAsState()
+    var sliderEntfernungPosition by remember { mutableFloatStateOf(0f) }
+    var sliderAlterPosition by remember { mutableFloatStateOf(0f) }
+    var sliderGroessePosition by remember { mutableFloatStateOf(0f) }
 
     Column(horizontalAlignment = Alignment.Start,
         verticalArrangement = Arrangement.Center,
         modifier = Modifier
             .padding(16.dp)
             .padding(start = 32.dp, end = 32.dp)) {
+        Row(modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically )
+        {
 
         // Entfernung-Filter
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically ) {
@@ -40,19 +47,35 @@ fun FilterScreen(viewModel: FilterViewModel = viewModel(),
                 fontWeight = FontWeight.Medium,
                 modifier = Modifier
                     .padding(bottom = 4.dp)
-                    .padding(end = 4.dp))
+                    .padding(end = 4.dp)
+            )
         }
 
-        Row(modifier = Modifier
-            .fillMaxWidth()
-            .padding(bottom = 4.dp), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically ) {
+        Row(modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically )
+        {
+
             Slider(
                 value = uiState.distance,
-                onValueChange = { viewModel.updateDistance(it) }
+                onValueChange = { viewModel.updateDistance(it) },
+                colors=SliderDefaults.colors(
+                    thumbColor=Color.Black,
+                    activeTrackColor=Color.Black,
+                    inactiveTrackColor=Color.Gray
+                ),
+                steps = 99,
+                valueRange = 0f..100f
             )
-            Text(text = uiState.distance.toString())
         }
+        Text(text = uiState.distance.toString() + " km")
 
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Row(modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically )
+        {
         // Absicht-Filter
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically ) {
             Icon(
@@ -65,30 +88,46 @@ fun FilterScreen(viewModel: FilterViewModel = viewModel(),
                 fontWeight = FontWeight.Medium,
                 modifier = Modifier
                     .padding(bottom = 4.dp)
-                    .padding(end = 4.dp))
+                    .padding(end = 4.dp)
+            )
         }
 
-        Row(modifier = Modifier
-            .fillMaxWidth()
-            .padding(bottom = 4.dp), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically ) {
+        Row(modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically )
+        {
             Column {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Text("Zuchtpartner")
                     Checkbox(
                         checked = uiState.zuchtpartner,
-                        onCheckedChange = { viewModel.updateZuchtpartner(it) }
+                        onCheckedChange = { viewModel.updateZuchtpartner(it) },
+                        colors=CheckboxDefaults.colors(
+                            checkedColor=Color.Black,
+                            uncheckedColor=Color.Gray
+                        )
                     )
                 }
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Text("Spielpartner")
                     Checkbox(
                         checked = uiState.spielpartner,
-                        onCheckedChange = { viewModel.updateSpielpartner(it) }
+                        onCheckedChange = { viewModel.updateSpielpartner(it) },
+                        colors=CheckboxDefaults.colors(
+                            checkedColor=Color.Black,
+                            uncheckedColor=Color.Gray
+                        )
                     )
                 }
             }
         }
 
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Row(modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically )
+        {
         // Tierart-Filter
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically ) {
             Icon(
@@ -104,31 +143,47 @@ fun FilterScreen(viewModel: FilterViewModel = viewModel(),
                     .padding(end = 4.dp))
         }
 
-        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically ) {
+        Row(modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically )
+        {
             Column {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Text("Hund")
                     Checkbox(
                         checked = uiState.hund,
-                        onCheckedChange = { viewModel.updateHund(it) }
+                        onCheckedChange = { viewModel.updateHund(it) },
+                        colors=CheckboxDefaults.colors(
+                            checkedColor=Color.Black,
+                            uncheckedColor=Color.Gray
+                        )
                     )
                 }
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Text("Katze")
                     Checkbox(
                         checked = uiState.katze,
-                        onCheckedChange = { viewModel.updateKatze(it) }
+                        onCheckedChange = { viewModel.updateKatze(it) },
+                        colors=CheckboxDefaults.colors(
+                            checkedColor=Color.Black,
+                            uncheckedColor=Color.Gray
+                        )
                     )
                 }
             }
         }
 
-        // Alter-Filter
-        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically ) {
+            Spacer(modifier = Modifier.height(16.dp))
+
+            // Alter-Filter
+        Row(modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically )
+        {
             Icon(
                 painter = painterResource(id = R.drawable.cake_24dp_fill0_wght400_grad0_opsz24),
                 contentDescription = "Alter",
-            )
+                )
             Text(
                 text = "Alter",
                 fontSize = 12.sp,
@@ -138,22 +193,35 @@ fun FilterScreen(viewModel: FilterViewModel = viewModel(),
                     .padding(end = 4.dp))
         }
 
-        Row(modifier = Modifier
-            .fillMaxWidth()
-            .padding(bottom = 4.dp), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically ) {
+        Row(modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically )
+        {
             Slider(
                 value = uiState.minAge,
-                onValueChange = { viewModel.updateMinAge(it) }
+                onValueChange = { viewModel.updateMinAge(it) },
+                colors=SliderDefaults.colors(
+                    thumbColor=Color.Black,
+                    activeTrackColor=Color.Black,
+                    inactiveTrackColor=Color.Gray
+                ),
+                steps = 19,
+                valueRange = 0f..20f
             )
-            Text(text = uiState.minAge.toString())
         }
+        Text(text = uiState.minAge.toString() + " Jahre")
 
-        // Größe-Filter
-        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically ) {
+            Spacer(modifier = Modifier.height(16.dp))
+
+            // Größe-Filter
+        Row(modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically )
+        {
             Icon(
                 painter = painterResource(id = R.drawable.square_foot_24dp_fill0_wght400_grad0_opsz24),
                 contentDescription = "Größe",
-            )
+                )
             Text(
                 text = "Größe",
                 fontSize = 12.sp,
@@ -164,19 +232,35 @@ fun FilterScreen(viewModel: FilterViewModel = viewModel(),
         }
 
         Row(modifier = Modifier
-            .fillMaxWidth()
-            .padding(bottom = 4.dp), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically ) {
+            .fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically )
+        {
+
             Slider(
                 value = uiState.maxSize,
-                onValueChange = { viewModel.updateMaxSize(it) }
+                onValueChange = { viewModel.updateMaxSize(it) },
+                colors=SliderDefaults.colors(
+                    thumbColor=Color.Black,
+                    activeTrackColor=Color.Black,
+                    inactiveTrackColor=Color.Gray
+                ),
+                steps = 99,
+                valueRange = 0f..100f
             )
-            Text(text = uiState.maxSize.toString())
         }
+        Text(text = uiState.maxSize.toString() + " cm")
+
+        Spacer(modifier = Modifier.height(16.dp))
 
         // Buttons für Bestätigen und Zurücksetzen
         Row(modifier = Modifier
             .fillMaxWidth()
-            .padding(bottom = 4.dp), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically ) {
+            .padding(bottom = 4.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically )
+        {
+
             Button(
                 onClick = {
                     viewModel.applyFilters()
@@ -196,9 +280,8 @@ fun FilterScreen(viewModel: FilterViewModel = viewModel(),
     }
 }
 
-/*
 @Preview(showBackground = true)
 @Composable
 fun MyFilterPreview(){
     FilterScreen(navController = rememberNavController())
-}*/
+}
