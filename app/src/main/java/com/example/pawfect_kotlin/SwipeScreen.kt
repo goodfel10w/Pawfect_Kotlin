@@ -71,6 +71,7 @@ import kotlinx.coroutines.delay
 import kotlin.math.absoluteValue
 import androidx.compose.material3.IconButton as IconButton1
 
+// Konstante für das Logging
 const val TAG = "RoutingActivity"
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -79,7 +80,7 @@ fun SwipeScreen(
     viewModel: SwipeViewModel = viewModel(),
     navController: NavHostController
 ) {
-
+    // Composable für ein Gerüst welches aufgespannnt wird mit definierten TopAppBar und BottomAppBar
     Scaffold(
         topBar = {
             TopAppBar(
@@ -105,14 +106,19 @@ fun SwipeScreen(
         }
     ) { innerPadding ->
 
+        // Hier wird der mittlere Teil des Scaffolds definiert
+
+        //Abrufen des StateFlows Stream mit dem Zustandsvariablen
         val uiState by viewModel.uiState.collectAsState()
 
+        // Zeilen Composable
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            // Bild Composable
             Image(
                 painter = painterResource(R.drawable.pawfect_logo),
                 contentDescription = "Logo",
@@ -122,6 +128,7 @@ fun SwipeScreen(
                     .padding(8.dp)
             )
             Spacer(modifier = Modifier.height(20.dp))
+            // Instanzierung der ProfileCard Funktion mit Swipe
             ProfileCardWithSwipe(
                 uiState = uiState,
                 onSwipeRight = {
@@ -131,11 +138,13 @@ fun SwipeScreen(
                     viewModel.addDislike()
                 }
             )
+            // Aufruf der unteren Profil Information UI
             ProfileInformation()
         }
     }
 }
 
+// Funktionsdeklaration für das Profile Card UI mit schon hard codierten Inhalten
 @Composable
 private fun ProfileCard(
     modifier: Modifier = Modifier,
@@ -158,7 +167,10 @@ private fun ProfileCard(
                     .height(300.dp)
                     .align(Alignment.CenterHorizontally)
             ) {
+                // Aufruf des zum profil richtigen Bilds als Workaround da der Blob Storage schwer umzusetzen ist
                 UseCorrectProfilePictureUnfiltered(uiState = uiState)
+
+                // Überprüfung ob ein Match existiert, wird nach einem Swipe aufgerufen und geprüft, danach wird der Dialog geschaltet
                 if( uiState.matchExists) {
                     AlertDialogMatch(
                         onDismissRequest = { viewModel.consumeMatch() },
@@ -168,6 +180,7 @@ private fun ProfileCard(
                     )
                 }
             }
+            // Anzeigen der Tierspezifischen Felder
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -201,6 +214,7 @@ private fun ProfileCard(
     }
 }
 
+// Funktionsdeklaration für die Profil Informations Composable / UI Element
 @Composable
 fun ProfileInformation(viewModel: SwipeViewModel = viewModel()) {
     val uiState by viewModel.uiState.collectAsState()
@@ -345,6 +359,7 @@ fun ProfileCardWithSwipe(
     onSwipeLeft: () -> Unit,
     onSwipeRight: () -> Unit
 ) {
+    // Offset Initalisierung
     var offsetX by remember { mutableStateOf(0f) }
     var offsetY by remember { mutableStateOf(0f) }
     val sizePx = with(LocalDensity.current) { 300.dp.toPx() }
@@ -358,6 +373,7 @@ fun ProfileCardWithSwipe(
         offsetYState.animateTo(0f)
     }
 
+    // Modul mit Werten und Funktionen für die Gestenerkennung
     val gestureDetector = Modifier.pointerInput(Unit) {
         detectDragGestures(
             onDragEnd = {
@@ -378,6 +394,7 @@ fun ProfileCardWithSwipe(
         }
     }
 
+    // Grafische Einstellung für die Animation
     ProfileCard(modifier = Modifier
         .offset { IntOffset(offsetX.toInt(), offsetY.toInt()) }
         .draggable(
@@ -449,6 +466,7 @@ fun MyScreenPreview() {
     SwipeScreen(viewModel = SwipeViewModel(), navController = rememberNavController())
 }
 
+// Workaround Funktion für die richte Bild Auswahl zum Tier
 @Composable
 fun UseCorrectProfilePictureUnfiltered(uiState: SwipeUiState) {
     if (uiState.indexOfList == 0) {
@@ -518,6 +536,7 @@ fun UseCorrectProfilePictureUnfiltered(uiState: SwipeUiState) {
     }
 }
 
+//Animationsfunktion für Match, Outdatet und wird nicht fortgesetzt
 @Composable
 fun CongratulatoryScreen() {
     var showCongrats by remember { mutableStateOf(false) }

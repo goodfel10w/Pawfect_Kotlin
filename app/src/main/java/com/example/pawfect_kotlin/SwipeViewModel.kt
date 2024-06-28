@@ -3,6 +3,7 @@ package com.example.pawfect_kotlin
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.example.pawfect_kotlin.data.SwipeUiState
+
 import com.example.pawfect_kotlin.database.entity.AnimalProfile
 import com.example.pawfect_kotlin.database.entity.Gender
 import com.example.pawfect_kotlin.database.entity.Intent
@@ -14,10 +15,13 @@ import java.sql.Date
 
 const val TAG = "SwipeActivity"
 
+//ViewModel Klasse für die Datenmanipulation für den Swipe Screen
 class SwipeViewModel() : ViewModel() {
 
+    // uiState der die notwendigen Zustände für den Screen intern hält und mit uiState Public nach aussen gibt
     private val _uiState = MutableStateFlow(SwipeUiState(animalProfiles = getAnimalMockProfiles(), userProfiles = mockUserProfiles() ))
     val uiState: StateFlow<SwipeUiState> = _uiState.asStateFlow()
+
 
     fun addLike() {
         Log.v(TAG,
@@ -57,7 +61,7 @@ class SwipeViewModel() : ViewModel() {
         _uiState.value = _uiState.value.copy(matchExists = false)
     }
 
-
+    // Mockprofile für Tiere
     private fun getAnimalMockProfiles(): List<AnimalProfile> {
         val animal1 = AnimalProfile(
             animalProfileId = 1,

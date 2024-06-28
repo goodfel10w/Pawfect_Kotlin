@@ -33,6 +33,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 
+//Screen für die Filter Einstellungen
 @Composable
 fun FilterScreen(viewModel: FilterViewModel = viewModel(),
                  navController: NavController) {
