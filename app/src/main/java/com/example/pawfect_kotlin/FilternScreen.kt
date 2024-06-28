@@ -43,7 +43,9 @@ fun FilterScreen(viewModel: FilterViewModel = viewModel(),
                     .padding(end = 4.dp))
         }
 
-        Row(modifier = Modifier.fillMaxWidth().padding(bottom = 4.dp), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically ) {
+        Row(modifier = Modifier
+            .fillMaxWidth()
+            .padding(bottom = 4.dp), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically ) {
             Slider(
                 value = uiState.distance,
                 onValueChange = { viewModel.updateDistance(it) }
@@ -66,7 +68,9 @@ fun FilterScreen(viewModel: FilterViewModel = viewModel(),
                     .padding(end = 4.dp))
         }
 
-        Row(modifier = Modifier.fillMaxWidth().padding(bottom = 4.dp), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically ) {
+        Row(modifier = Modifier
+            .fillMaxWidth()
+            .padding(bottom = 4.dp), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically ) {
             Column {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Text("Zuchtpartner")
@@ -134,7 +138,9 @@ fun FilterScreen(viewModel: FilterViewModel = viewModel(),
                     .padding(end = 4.dp))
         }
 
-        Row(modifier = Modifier.fillMaxWidth().padding(bottom = 4.dp), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically ) {
+        Row(modifier = Modifier
+            .fillMaxWidth()
+            .padding(bottom = 4.dp), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically ) {
             Slider(
                 value = uiState.minAge,
                 onValueChange = { viewModel.updateMinAge(it) }
@@ -157,7 +163,9 @@ fun FilterScreen(viewModel: FilterViewModel = viewModel(),
                     .padding(end = 4.dp))
         }
 
-        Row(modifier = Modifier.fillMaxWidth().padding(bottom = 4.dp), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically ) {
+        Row(modifier = Modifier
+            .fillMaxWidth()
+            .padding(bottom = 4.dp), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically ) {
             Slider(
                 value = uiState.maxSize,
                 onValueChange = { viewModel.updateMaxSize(it) }
@@ -166,9 +174,14 @@ fun FilterScreen(viewModel: FilterViewModel = viewModel(),
         }
 
         // Buttons für Bestätigen und Zurücksetzen
-        Row(modifier = Modifier.fillMaxWidth().padding(bottom = 4.dp), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically ) {
+        Row(modifier = Modifier
+            .fillMaxWidth()
+            .padding(bottom = 4.dp), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically ) {
             Button(
-                onClick = { viewModel.applyFilters() },
+                onClick = {
+                    viewModel.applyFilters()
+                          navController.navigate(PawfectDestinations.Start.name)
+                          },
                 colors = ButtonDefaults.buttonColors(containerColor = Color.Black, contentColor = Color.White)
             ) {
                 Text(text = "Bestätigen")

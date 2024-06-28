@@ -8,7 +8,12 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
-class FilterViewModel(private val animalProfileDao: AnimalProfileDao) : ViewModel() {
+class FilterViewModel() : ViewModel() {
+
+    private val animalProfileDao: AnimalProfileDao
+        get() {
+            TODO()
+        }
 
     private val _uiState = MutableStateFlow(FilterUiState())
     val uiState: StateFlow<FilterUiState> = _uiState

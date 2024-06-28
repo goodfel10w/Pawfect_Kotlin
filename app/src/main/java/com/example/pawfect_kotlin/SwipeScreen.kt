@@ -69,7 +69,7 @@ const val TAG = "RoutingActivity"
 @Composable
 fun SwipeScreen(
     viewModel: SwipeViewModel = viewModel(),
-    navController: NavHostController = rememberNavController()
+    navController: NavHostController
 ) {
 
     Scaffold(
@@ -165,7 +165,7 @@ private fun ProfileCard(
                 )
                 Row {
                     Text(
-                        text = uiState.animalProfiles[0].species + ",",
+                        text = uiState.animalProfiles[uiState.indexOfList].species + ",",
                         fontSize = 12.sp,
                         fontWeight = FontWeight.Medium,
                         modifier = Modifier
@@ -173,7 +173,7 @@ private fun ProfileCard(
                             .padding(end = 4.dp)
                     )
                     Text(
-                        text = uiState.animalProfiles[0].breed,
+                        text = uiState.animalProfiles[uiState.indexOfList].breed,
                         fontSize = 12.sp,
                         fontWeight = FontWeight.Medium,
                         modifier = Modifier
@@ -309,7 +309,8 @@ fun BottomAppBarExample() {
         modifier = Modifier
     ) {
         Row(
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxWidth()
                 .fillMaxSize()
                 .fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceAround
@@ -432,7 +433,7 @@ fun ProfileCardWithSwipe(
 @Preview(showBackground = true)
 @Composable
 fun MyScreenPreview() {
-    SwipeScreen(viewModel = SwipeViewModel())
+    SwipeScreen(viewModel = SwipeViewModel(), navController = rememberNavController())
 }
 
 @Composable
