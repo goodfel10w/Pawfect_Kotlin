@@ -26,13 +26,15 @@ fun FilterScreen(viewModel: FilterViewModel = viewModel(),
     var sliderGroessePosition by remember { mutableFloatStateOf(0f) }
 
     Column(
-        horizontalAlignment = Alignment.Start,
+        horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
         modifier = Modifier
             .padding(16.dp)
             .padding(start = 32.dp, end = 32.dp)
     )
     {
+        Spacer(modifier = Modifier.height(32.dp))
+
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
@@ -44,7 +46,7 @@ fun FilterScreen(viewModel: FilterViewModel = viewModel(),
             )
             Text(
                 text = "Entfernung",
-                fontSize = 12.sp,
+                fontSize = 15.sp,
                 fontWeight = FontWeight.Medium,
                 modifier = Modifier
                     .padding(bottom = 4.dp)
@@ -87,7 +89,7 @@ fun FilterScreen(viewModel: FilterViewModel = viewModel(),
             )
             Text(
                 text = "Absicht",
-                fontSize = 12.sp,
+                fontSize = 15.sp,
                 fontWeight = FontWeight.Medium,
                 modifier = Modifier
                     .padding(bottom = 4.dp)
@@ -139,7 +141,7 @@ fun FilterScreen(viewModel: FilterViewModel = viewModel(),
             )
             Text(
                 text = "Tierart",
-                fontSize = 12.sp,
+                fontSize = 15.sp,
                 fontWeight = FontWeight.Medium,
                 modifier = Modifier
                     .padding(bottom = 4.dp)
@@ -192,7 +194,7 @@ fun FilterScreen(viewModel: FilterViewModel = viewModel(),
             )
             Text(
                 text = "Alter",
-                fontSize = 12.sp,
+                fontSize = 15.sp,
                 fontWeight = FontWeight.Medium,
                 modifier = Modifier
                     .padding(bottom = 4.dp)
@@ -235,7 +237,7 @@ fun FilterScreen(viewModel: FilterViewModel = viewModel(),
             )
             Text(
                 text = "Größe",
-                fontSize = 12.sp,
+                fontSize = 15.sp,
                 fontWeight = FontWeight.Medium,
                 modifier = Modifier
                     .padding(bottom = 4.dp)
