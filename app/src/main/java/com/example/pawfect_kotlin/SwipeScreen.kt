@@ -19,8 +19,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Card
@@ -45,10 +43,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -59,11 +55,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
-import androidx.navigation.NavOptions
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.pawfect_kotlin.FilterScreen
 import com.example.pawfect_kotlin.PawfectDestinations
 import com.example.pawfect_kotlin.R
 import com.example.pawfect_kotlin.SwipeViewModel
@@ -77,7 +69,8 @@ const val TAG = "RoutingActivity"
 @Composable
 fun SwipeScreen(
     viewModel: SwipeViewModel = viewModel(),
-    navController: NavHostController = rememberNavController()) {
+    navController: NavHostController = rememberNavController()
+) {
 
     Scaffold(
         topBar = {
@@ -85,7 +78,7 @@ fun SwipeScreen(
                 title = { Text("") },
                 actions = {
                     IconButton1(onClick = {
-                        Log.v(TAG,"Route to Filter triggered")
+                        Log.v(TAG, "Route to Filter triggered")
                         navController.navigate(PawfectDestinations.Filter.name) {
                             launchSingleTop = true
                         }
@@ -93,7 +86,8 @@ fun SwipeScreen(
                         Icon(
                             painter = painterResource(id = R.drawable.filter_alt_24px),
                             contentDescription = "",
-                            modifier = Modifier.fillMaxSize())
+                            modifier = Modifier.fillMaxSize()
+                        )
                     }
                 },
             )
@@ -124,8 +118,7 @@ fun SwipeScreen(
                 onSwipeLeft = {
                     viewModel.addDislike()
                 }
-            ) {
-            }
+            )
             ProfileInformation()
             BottomAppBarExample()
         }
@@ -144,8 +137,7 @@ private fun ProfileCard(
             .background(Color.White)
             .padding(16.dp)
             .clip(RoundedCornerShape(topStart = 12.dp, topEnd = 12.dp))
-            .border(width = 1.dp, color = Color.LightGray)
-            ,
+            .border(width = 1.dp, color = Color.LightGray),
         colors = CardDefaults.cardColors(containerColor = Color.White)
     ) {
         Column(
@@ -156,42 +148,35 @@ private fun ProfileCard(
                     .height(300.dp)
                     .align(Alignment.CenterHorizontally)
             ) {
-                Image(
-                    painter = painterResource(R.drawable.pawfect_logo),
-                    contentDescription = null,
-                    contentScale = ContentScale.Crop,
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .clip(RoundedCornerShape(topStart = 12.dp, topEnd = 12.dp))
+                UseCorrectProfilePictureUnfiltered(uiState = uiState)
+            }
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(8.dp)
+            ) {
+                Text(
+                    text = uiState.animalProfiles[uiState.indexOfList].name + ", " + uiState.animalProfiles[uiState.indexOfList].age,
+                    fontSize = 22.sp,
+                    fontWeight = FontWeight.Medium,
+                    modifier = Modifier.padding(bottom = 4.dp)
                 )
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(8.dp)
-                ) {
+                Row {
                     Text(
-                        text = uiState.animalProfiles[uiState.indexOfList].name + ", " + uiState.animalProfiles[uiState.indexOfList].age,
-                        fontSize = 22.sp,
+                        text = uiState.animalProfiles[0].species + ",",
+                        fontSize = 12.sp,
                         fontWeight = FontWeight.Medium,
-                        modifier = Modifier.padding(bottom = 4.dp)
+                        modifier = Modifier
+                            .padding(bottom = 4.dp)
+                            .padding(end = 4.dp)
                     )
-                    Row {
-                        Text(
-                            text = uiState.animalProfiles[0].species + ",",
-                            fontSize = 12.sp,
-                            fontWeight = FontWeight.Medium,
-                            modifier = Modifier
-                                .padding(bottom = 4.dp)
-                                .padding(end = 4.dp)
-                        )
-                        Text(
-                            text = uiState.animalProfiles[0].breed,
-                            fontSize = 12.sp,
-                            fontWeight = FontWeight.Medium,
-                            modifier = Modifier
-                                .padding(bottom = 4.dp)
-                        )
-                    }
+                    Text(
+                        text = uiState.animalProfiles[0].breed,
+                        fontSize = 12.sp,
+                        fontWeight = FontWeight.Medium,
+                        modifier = Modifier
+                            .padding(bottom = 4.dp)
+                    )
                 }
             }
         }
@@ -205,10 +190,10 @@ fun MessageEmptyDialog(
     dialogTitle: String,
     dialogText: String,
     icon: ImageVector,
-    ) {
+) {
     AlertDialog(
         icon = {
-            Icon(icon, contentDescription = "Example Icon", )
+            Icon(icon, contentDescription = "Example Icon")
         },
         title = {
             Text(text = dialogTitle)
@@ -242,50 +227,75 @@ fun MessageEmptyDialog(
 
 @Composable
 fun ProfileInformation(viewModel: SwipeViewModel = viewModel()) {
-        val uiState by viewModel.uiState.collectAsState()
-        Column(horizontalAlignment = Alignment.Start,
-                verticalArrangement = Arrangement.Center,
+    val uiState by viewModel.uiState.collectAsState()
+    Column(
+        horizontalAlignment = Alignment.Start,
+        verticalArrangement = Arrangement.Center,
+        modifier = Modifier
+            .padding(16.dp)
+            .padding(start = 32.dp, end = 32.dp)
+    ) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Icon(
+                painter = painterResource(id = R.drawable.square_foot_24dp_fill0_wght400_grad0_opsz24),
+                contentDescription = "Größe",
+
+                )
+            Text(
+                text = uiState.animalProfiles[uiState.indexOfList].size.toString() + " cm",
+                fontSize = 12.sp,
+                fontWeight = FontWeight.Medium,
                 modifier = Modifier
-                    .padding(16.dp)
-                    .padding(start = 32.dp, end = 32.dp)) {
-            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically ) {
-                Icon(
-                    painter = painterResource(id = R.drawable.square_foot_24dp_fill0_wght400_grad0_opsz24),
-                    contentDescription = "Größe",
+                    .padding(bottom = 4.dp)
+                    .padding(end = 4.dp)
+            )
+        }
+        HorizontalDivider(
+            thickness = 1.dp,
+            color = Color.Black,
+            modifier = Modifier.padding(top = 2.dp, bottom = 2.dp)
+        )
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Icon(
+                painter = painterResource(id = R.drawable.user_attributes_24dp_fill0_wght400_grad0_opsz24),
+                contentDescription = "Eigenschaften"
+            )
+            Text(
+                text = uiState.animalProfiles[uiState.indexOfList].characteristics,
+                fontSize = 12.sp,
+                fontWeight = FontWeight.Medium,
+                modifier = Modifier
+            )
+        }
+        HorizontalDivider(
+            thickness = 1.dp,
+            color = Color.Black,
+            modifier = Modifier.padding(top = 2.dp, bottom = 2.dp)
+        )
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Icon(
+                painter = painterResource(id = R.drawable.person_24dp_fill0_wght400_grad0_opsz24),
+                contentDescription = stringResource(R.string.name_des_tierhalters),
 
                 )
-                Text(
-                    text = uiState.animalProfiles[uiState.indexOfList].size.toString() + " cm",
-                    fontSize = 12.sp,
-                    fontWeight = FontWeight.Medium,
-                    modifier = Modifier
-                        .padding(bottom = 4.dp)
-                        .padding(end = 4.dp))
-            }
-            HorizontalDivider(thickness = 1.dp, color = Color.Black, modifier = Modifier.padding(top = 2.dp, bottom = 2.dp))
-            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically ) {
-                Icon(
-                    painter = painterResource(id = R.drawable.user_attributes_24dp_fill0_wght400_grad0_opsz24),
-                    contentDescription = "Eigenschaften"
-                )
-                Text(
-                    text = uiState.animalProfiles[uiState.indexOfList].characteristics,
-                    fontSize = 12.sp,
-                    fontWeight = FontWeight.Medium,
-                    modifier = Modifier
-                )
-            }
-            HorizontalDivider( thickness = 1.dp, color = Color.Black, modifier = Modifier.padding(top = 2.dp, bottom = 2.dp))
-            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically ) {
-                Icon(
-                    painter = painterResource(id = R.drawable.person_24dp_fill0_wght400_grad0_opsz24),
-                    contentDescription = stringResource(R.string.name_des_tierhalters),
-
-                )
-                Text(text = uiState.userProfiles[uiState.indexOfList].firstName + " " + uiState.userProfiles[uiState.indexOfList].lastName,
-                    fontSize = 12.sp,
-                    fontWeight = FontWeight.Medium,
-                    modifier = Modifier)
+            Text(
+                text = uiState.userProfiles[uiState.indexOfList].firstName + " " + uiState.userProfiles[uiState.indexOfList].lastName,
+                fontSize = 12.sp,
+                fontWeight = FontWeight.Medium,
+                modifier = Modifier
+            )
         }
     }
 }
@@ -294,7 +304,8 @@ fun ProfileInformation(viewModel: SwipeViewModel = viewModel()) {
 fun BottomAppBarExample() {
     BottomAppBar(
         contentPadding = PaddingValues(horizontal = 32.dp),
-        modifier = Modifier.background(Color.White)
+        modifier = Modifier
+            .background(Color.White)
     ) {
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -353,8 +364,7 @@ fun ProfileCardWithSwipe(
     modifier: Modifier = Modifier,
     draggable: Boolean = true,
     onSwipeLeft: () -> Unit,
-    onSwipeRight: () -> Unit,
-    content: @Composable () -> Unit
+    onSwipeRight: () -> Unit
 ) {
     var offsetX by remember { mutableStateOf(0f) }
     var offsetY by remember { mutableStateOf(0f) }
@@ -373,10 +383,10 @@ fun ProfileCardWithSwipe(
         detectDragGestures(
             onDragEnd = {
 
-                if(offsetX > swipeThreshold) {
+                if (offsetX > swipeThreshold) {
                     onSwipeRight()
                 }
-                if(offsetX < 0) {
+                if (offsetX < 0) {
                     onSwipeLeft()
                 }
                 offsetX = 0f
