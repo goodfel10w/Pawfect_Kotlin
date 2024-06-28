@@ -1,5 +1,12 @@
 import android.util.Log
 import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.RepeatMode
+import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.rememberInfiniteTransition
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -18,9 +25,11 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.BottomAppBar
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -39,6 +48,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
@@ -60,6 +70,7 @@ import com.example.pawfect_kotlin.PawfectDestinations
 import com.example.pawfect_kotlin.R
 import com.example.pawfect_kotlin.SwipeViewModel
 import com.example.pawfect_kotlin.data.SwipeUiState
+import kotlinx.coroutines.delay
 import kotlin.math.absoluteValue
 import androidx.compose.material3.IconButton as IconButton1
 
@@ -151,6 +162,9 @@ private fun ProfileCard(
                     .align(Alignment.CenterHorizontally)
             ) {
                 UseCorrectProfilePictureUnfiltered(uiState = uiState)
+                if( uiState.matchExists) {
+                    CongratulatoryScreen()
+                }
             }
             Column(
                 modifier = Modifier
@@ -503,4 +517,83 @@ fun UseCorrectProfilePictureUnfiltered(uiState: SwipeUiState) {
                 .clip(RoundedCornerShape(topStart = 12.dp, topEnd = 12.dp))
         )
     }
+}
+
+@Composable
+fun CongratulatoryScreen() {
+    var showCongrats by remember { mutableStateOf(false) }
+    var showConfetti by remember { mutableStateOf(false) }
+    var dismissed by remember { mutableStateOf(false)
+    }
+
+    // Simulate the event (e.g., game win) after a delay
+    LaunchedEffect(Unit) {
+        delay(1000) // Delay to simulate the event trigger
+        showCongrats = true
+        showConfetti = true
+    }
+
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
+        if (showCongrats) {
+            CongratulationsMessage()
+        }
+        if (showConfetti) {
+            ConfettiAnimation()
+        }
+        if (showCongrats || showConfetti) {
+            Button(
+                onClick = { dismissed = true },
+                modifier = Modifier
+                    .align(Alignment.BottomEnd)
+                    .padding(16.dp)
+            ) {
+                Text(text = "Dismiss")
+            }
+        }
+    }
+}
+
+
+@Composable
+fun CongratulationsMessage() {
+    Text(
+        text = "It's a match!",
+        fontSize = 24.sp,
+        color = Color.White,
+        modifier = Modifier.fadeInAnimation()
+    )
+}
+
+@Composable
+fun ConfettiAnimation() {
+    val infiniteTransition = rememberInfiniteTransition(label = "")
+    val offset by infiniteTransition.animateFloat(
+        initialValue = 0f,
+        targetValue = 1000f,
+        animationSpec = infiniteRepeatable(
+            animation = tween(5000, easing = LinearEasing),
+        ), label = ""
+    )
+
+    Image(
+        painter = painterResource(id = R.drawable.c),
+        contentDescription = null,
+        contentScale = ContentScale.Crop,
+        modifier = Modifier
+            .size(200.dp)
+            .offset(y = offset.dp)
+            .fadeInAnimation()
+    )
+}
+
+@Composable
+fun Modifier.fadeInAnimation(): Modifier {
+    val alpha by animateFloatAsState(
+        targetValue = 1f,
+        animationSpec = tween(durationMillis = 1000), label = ""
+    )
+    return this.alpha(alpha)
 }

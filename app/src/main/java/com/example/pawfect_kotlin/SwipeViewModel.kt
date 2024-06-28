@@ -26,6 +26,10 @@ class SwipeViewModel() : ViewModel() {
                     "index = " +
                     _uiState.value.indexOfList)
         _uiState.value = _uiState.value.copy(indexOfList = _uiState.value.indexOfList.inc())
+
+        if (_uiState.value.indexOfList == 3) {
+            setMatch()
+        }
     }
 
     fun addDislike() {
@@ -43,6 +47,10 @@ class SwipeViewModel() : ViewModel() {
             //List End reached
             _uiState.value = _uiState.value.copy(noMoreProfilesLoaded = true)
         }
+    }
+
+    private fun setMatch() {
+        _uiState.value = _uiState.value.copy(matchExists = true)
     }
 
     private fun getAnimalMockProfiles(): List<AnimalProfile> {
